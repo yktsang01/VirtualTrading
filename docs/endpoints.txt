@@ -1,0 +1,154 @@
+=======================================
+Virtual Trading Endpoints
+=======================================
+
+GET  / => /welcome.html
+GET  /register => /registration.html
+POST /register
+GET  /resetPassword?from=XXX => /resetPassword.html
+POST /resetPassword
+GET  /login?from=XXX => /login.html
+POST /login
+
+GET  /member/logout
+GET  /member/publicProfile => /member/publicProfile.html
+GET  /member/profile => /member/profile.html
+POST /member/updateProfile
+POST /member/updateAccount (same as reset password after login)
+POST /member/requestAdmin
+POST /member/deactivateProfile
+
+GET  /member/accountBalance => /member/accountBalance.html
+GET  /member/accountBalance?ccy=XXX => /member/accountBalance.html
+POST /member/depositFunds
+GET  /member/accountTxn => /member/accountTxn.html
+GET  /member/accountTxn?ccy=XXX => /member/accountTxn.html
+
+GET  /member/bankInfo => /member/bankInfo.html
+GET  /member/bankInfo?ccy=XXX => /member/bankInfo.html
+POST /member/addBank
+GET  /member/obsoleteBank?id=# (mark not in use)
+GET  /member/bankTxn => /member/bankTxn.html
+GET  /member/bankTxn?ccy=XXX => /member/bankTxn.html
+
+GET  /member/transferFunds => /member/transfer.html
+GET  /member/transferFunds?ccy=XXX => /member/transfer.html
+POST /member/transferFunds
+
+GET  /member/dashboard => /member/dashboard.html
+GET  /member/dashboard?ccy=XXX => /member/dashboard.html
+POST /member/addToWatchList
+POST /member/removeFromWatchList
+GET  /member/indices => /member/indices.html
+GET  /member/indices?ccy=XXX => /member/indices.html
+GET  /member/equities => /member/equities.html
+GET  /member/equities?ccy=XXX => /member/equities.html
+POST /member/search
+GET  /member/buy?s=XXX => /member/buy.html
+POST /member/buy
+GET  /member/sell?s=XXX => /member/sell.html
+POST /member/sell
+GET  /member/tradingTxn => /member/tradingTxn.html
+GET  /member/tradingTxn?ccy=XXX => /member/tradingTxn.html
+GET  /member/outstandingTxn => /member/outstandingTxn.html
+GET  /member/outstandingTxn?ccy=XXX => /member/outstandingTxn.html
+POST /member/createPortfolio
+GET  /member/portfolio => /member/portfolio.html
+GET  /member/portfolio?ccy=XXX => /member/portfolio.html
+POST /member/linkToPortfolio
+GET  /member/portfolioDetails?id=# => /member/portfolioDetails.html
+POST /member/unlinkFromPortfolio
+GET  /member/reset => /member/reset.html
+POST /member/reset
+
+GET  /admin => /resetPassword.html or /login.html
+
+GET  /admin/logout
+GET  /admin/profile => /admin/profile.html
+GET  /admin/adminRequests => /admin/adminRequests.html
+POST /admin/adminRequests (grant)
+GET  /admin/adminAccess => /admin/adminAccess.html
+POST /admin/adminAccess (revoke)
+
+GET  /admin/isoData => /admin/isoData.html
+GET  /admin/isoCreation => /admin/addIsoData.html
+POST /admin/createIsoData
+POST /admin/activateIsoData
+GET  /admin/isoUpdate?code=XX => /admin/amendIsoData.html
+POST /admin/updateIsoData (include deactivate)
+
+GET  /api => /swagger-ui.html (/swagger-ui/index.html)
+
+GET /actuator
+
+
+DO NOT REQUIRE JWT
+
+POST /api/v1/registration
+POST /api/v1/password/reset
+POST /api/v1/login
+POST /api/v1/refreshToken
+
+
+DO REQUIRE JWT
+
+GET  /api/v1/member/profile/public
+GET  /api/v1/member/profile/private
+POST /api/v1/member/profile/update
+POST /api/v1/member/account/update
+POST /api/v1/member/admin/request
+POST /api/v1/member/profile/deactivate
+
+GET  /api/v1/member/balances
+GET  /api/v1/member/balances/{ccy}
+POST /api/v1/member/balances/deposit
+GET  /api/v1/member/account/transactions
+GET  /api/v1/member/account/transactions/{ccy}
+
+GET  /api/v1/member/banks
+GET  /api/v1/member/banks/{ccy}
+POST /api/v1/member/banks/add
+GET  /api/v1/member/banks/obsolete/{id}
+GET  /api/v1/member/banks/transactions
+GET  /api/v1/member/banks/transactions/{ccy}
+
+POST /api/v1/member/transfer
+
+POST /api/v1/member/watchList/add
+POST /api/v1/member/watchList/remove
+GET  /api/v1/member/watchList
+GET  /api/v1/member/watchList/{ccy}
+GET  /api/v1/member/trading/indices
+GET  /api/v1/member/trading/indices/{ccy}
+GET  /api/v1/member/trading/equities
+GET  /api/v1/member/trading/equities/{ccy}
+POST /api/v1/member/trading/search
+POST /api/v1/member/trading/buy
+POST /api/v1/member/trading/sell
+GET  /api/v1/member/trading/transactions
+GET  /api/v1/member/trading/transactions/{ccy}
+GET  /api/v1/member/trading/transactions/outstanding
+GET  /api/v1/member/trading/transactions/outstanding/{ccy}
+POST /api/v1/member/portfolios/create
+GET  /api/v1/member/portfolios
+GET  /api/v1/member/portfolios/{ccy}
+POST /api/v1/member/portfolios/link
+POST /api/v1/member/portfolios/unlink
+GET  /api/v1/member/portfolios/details/{id}
+POST /api/v1/member/portfolios/reset
+
+GET  /api/v1/admin/requests
+POST /api/v1/admin/accesses/grant
+GET  /api/v1/admin/accesses
+POST /api/v1/admin/accesses/revoke
+
+GET  /api/v1/member/iso/currencies
+GET  /api/v1/admin/iso
+GET  /api/v1/admin/iso/{code}
+POST /api/v1/admin/iso/create
+POST /api/v1/admin/iso/activate
+POST /api/v1/admin/iso/update
+POST /api/v1/admin/iso/deactivate
+
+
+

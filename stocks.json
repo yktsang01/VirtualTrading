@@ -1,0 +1,361 @@
+{
+  "stocks": [
+    {
+      "symbol": "^HSI",
+      "description": "Hang Seng Index",
+      "type": "index",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "000001.SS",
+      "description": "SSE Composite",
+      "type": "index",
+      "currency": "CNY",
+      "location": "Shanghai, China"
+    },
+    {
+      "symbol": "399001.SZ",
+      "description": "Shenzhen Index",
+      "type": "index",
+      "currency": "CNY",
+      "location": "Shenzhen, China"
+    },
+    {
+      "symbol": "^N225",
+      "description": "Nikkei 225",
+      "type": "index",
+      "currency": "JPY",
+      "location": "Osaka, Japan"
+    },
+    {
+      "symbol": "^DJI",
+      "description": "Dow Jones Industrial",
+      "type": "index",
+      "currency": "USD",
+      "location": "New York, NY USA"
+    },
+    {
+      "symbol": "^GSPC",
+      "description": "Standard and Poor's S&P 500",
+      "type": "index",
+      "currency": "USD",
+      "location": "New York, NY USA"
+    },
+    {
+      "symbol": "^IXIC",
+      "description": "NASDAQ Composite",
+      "type": "index",
+      "currency": "USD",
+      "location": "New York, NY USA"
+    },
+    {
+      "symbol": "^FTSE",
+      "description": "FTSE 100",
+      "type": "index",
+      "currency": "GBP",
+      "location": "London, England, United Kingdom"
+    },
+    {
+      "symbol": "^FCHI",
+      "description": "CAC 40",
+      "type": "index",
+      "currency": "EUR",
+      "location": "Paris, France"
+    },
+    {
+      "symbol": "^GDAXI",
+      "description": "DAX 40",
+      "type": "index",
+      "currency": "EUR",
+      "location": "Frankfurt, Germany"
+    },
+    {
+      "symbol": "0005.HK",
+      "description": "HSBC",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0011.HK",
+      "description": "Hang Seng Bank",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0023.HK",
+      "description": "Bank of East Asia",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0388.HK",
+      "description": "Hong Kong Exchange",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0939.HK",
+      "description": "China Construction Bank",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "1288.HK",
+      "description": "Agricultural Bank of China",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "1398.HK",
+      "description": "Industrial & Commerical Bank of China",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "2388.HK",
+      "description": "Bank of China Hong Kong",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "2888.HK",
+      "description": "Standard Chartered Group",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "3328.HK",
+      "description": "Bank of Communications",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "3968.HK",
+      "description": "China Merchants Bank",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "3988.HK",
+      "description": "Bank of China",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0945.HK",
+      "description": "Manulife",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0966.HK",
+      "description": "China Tai Ping",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "1299.HK",
+      "description": "AIA Group",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "1339.HK",
+      "description": "PICC Group",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "2318.HK",
+      "description": "Ping An",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "2378.HK",
+      "description": "Prudential",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "2628.HK",
+      "description": "China Life",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0002.HK",
+      "description": "CLP Holdings",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0003.HK",
+      "description": "Hongkong & China Gas",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "2638.HK",
+      "description": "Hong Kong Electric",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0386.HK",
+      "description": "Sinopec",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0857.HK",
+      "description": "PetroChina",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0883.HK",
+      "description": "CNOOC",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "2823.HK",
+      "description": "X iShares A50 (FTSE A50 China Index ETF)",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0001.HK",
+      "description": "Cheung Kong",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0016.HK",
+      "description": "Sun Hung Kai Property",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0066.HK",
+      "description": "MTR",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0700.HK",
+      "description": "Tencent",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0941.HK",
+      "description": "China Mobile",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "0992.HK",
+      "description": "Lenovo Group",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "9988.HK",
+      "description": "Alibaba",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "9888.HK",
+      "description": "Baidu",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "2800.HK",
+      "description": "Tracker Fund (HSI)",
+      "type": "equity",
+      "currency": "HKD",
+      "location": "Hong Kong, China"
+    },
+    {
+      "symbol": "IBM",
+      "description": "IBM",
+      "type": "equity",
+      "currency": "USD",
+      "location": "USA"
+    },
+    {
+      "symbol": "INTC",
+      "description": "Intel",
+      "currency": "USD",
+      "type": "equity",
+      "location": "USA"
+    },
+    {
+      "symbol": "MSFT",
+      "description": "Microsoft",
+      "type": "equity",
+      "currency": "USD",
+      "location": "USA"
+    },
+    {
+      "symbol": "AMD",
+      "description": "AMD",
+      "type": "equity",
+      "currency": "USD",
+      "location": "USA"
+    },
+    {
+      "symbol": "GOOG",
+      "description": "Alphabet/ Google",
+      "type": "equity",
+      "currency": "USD",
+      "location": "USA"
+    },
+    {
+      "symbol": "ORCL",
+      "description": "Oracle",
+      "type": "equity",
+      "currency": "USD",
+      "location": "USA"
+    }
+  ]
+}

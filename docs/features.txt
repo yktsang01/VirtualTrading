@@ -1,0 +1,67 @@
+=======================================
+Virtual Trading Features
+=======================================
+
+register member
+reset password (also re-activate profile)
+login member
+login admin
+refresh JWT
+
+logout member
+view public profile
+view member profile
+update member profile
+update account (reset password after login)
+request admin access
+deactivate profile (also revoke admin access)
+
+deposit funds 
+view account balances (with pagination)
+create account transactions
+view account transactions (with pagination)
+
+add bank account 
+view bank accounts (with pagination)
+obsolete bank account 
+create bank account transactions
+view bank account transactions (with pagination)
+
+transfer funds from account balance to bank account
+
+view stocks (indices) (with pagination)
+view stocks (equities) (with pagination)
+search stocks using symbol (with pagination)
+search stocks using name (with pagination)
+
+view member dashboard
+add stocks to watch list 
+view watch list (with pagination)
+remove stocks from watch list
+
+buy stocks
+sell stocks
+create trading transactions
+view trading transactions (with pagination)
+view outstanding trading transactions (with pagination)
+create portfolio
+view portfolio (with pagination)
+link trading transactions to portfolio
+view portfolio details
+unlink trading transactions from portfolio
+reset portfolio
+
+logout admin
+view admin requests 
+grant admin access 
+view admin access 
+revoke admin access 
+
+create ISO data 
+view ISO data 
+update ISO data 
+activate ISO data 
+deactivate ISO data 
+
+actuator
+
