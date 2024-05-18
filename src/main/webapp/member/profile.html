@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+    <script src="../js/common_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Member Profile</h1>
+<script>includeHTML();</script>
+
+<#if account.admin() >
+<p>You are also an admin.</p>
+</#if>
+
+<p>You can do the following:</p>
+<ul>
+    <li>View &amp; update profile</li>
+    <li>Reset password</li>
+    <#if !account.adminRequested() >
+    <li>Request admin access</li>
+</#if>
+<#if !adminAccount >
+<li>Deactivate account</li>
+</#if>
+<#if trader.allowReset() >
+<li><a href="/member/reset">Reset portfolio</a></li>
+</#if>
+</ul>
+
+<h5>View &amp; Update Profile</h5>
+<#if updateProfileErrorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${updateProfileErrorMessage}<p>
+</#if>
+<form method="post" action="/member/updateProfile">
+    <table>
+        <tr>
+            <td>Email</td>
+            <td>${trader.email()}</td>
+        </tr>
+        <tr>
+            <td><label for="fullName">Full Name</label></td>
+            <td><input type="text" id="fullName" name="fullName" value="${trader.fullName()}"></td>
+        </tr>
+        <tr>
+            <td><label>Date of Birth</label></td>
+            <td><label for="dateOfBirthMonth"></label>
+                <select name="dateOfBirthMonth" id="dateOfBirthMonth">
+                    <option value="0">MMMMM</option>
+                    <option value="${trader.dateOfBirth().getMonthValue()}" selected>
+                        ${trader.dateOfBirth().getMonth()}
+                    </option>
+                    <option value="1">JANUARY</option>
+                    <option value="2">FEBRUARY</option>
+                    <option value="3">MARCH</option>
+                    <option value="4">APRIL</option>
+                    <option value="5">MAY</option>
+                    <option value="6">JUNE</option>
+                    <option value="7">JULY</option>
+                    <option value="8">AUGUST</option>
+                    <option value="9">SEPTEMBER</option>
+                    <option value="10">OCTOBER</option>
+                    <option value="11">NOVEMBER</option>
+                    <option value="12">DECEMBER</option>
+                </select>
+                <label for="dateOfBirthDay"></label>
+                <select name="dateOfBirthDay" id="dateOfBirthDay">
+                    <option value="0">DD</option>
+                    <option value="${trader.dateOfBirth().getDayOfMonth()}" selected>
+                        ${trader.dateOfBirth().getDayOfMonth()}
+                    </option>
+                    <script>
+                        for (let i = 1; i <= 31; i++) {
+                            document.write("<option value='"+i+"'>"+i+"</option>");
+                        }
+                    </script>
+                </select>
+                <label for="dateOfBirthYear"></label>
+                <select name="dateOfBirthYear" id="dateOfBirthYear">
+                    <option value="0">YYYY</option>
+                    <option value="${trader.dateOfBirthYearAsString()}" selected>${trader.dateOfBirthYearAsString()}
+                    </option>
+                    <script>
+                        const d = new Date();
+                        let currentYear = d.getFullYear();
+                        let startYear = currentYear - 100;
+                        for (let i = currentYear; i >= startYear; i--) {
+                            document.write("<option value='"+i+"'>"+i+"</option>");
+                        }
+                    </script>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Hide Date of Birth?</label></td>
+            <td>
+                <label for="yesHideDOB"></label>
+                <input type="radio" name="hideDateOfBirth" id="yesHideDOB"
+                       value="Y" <#if trader.hideDateOfBirth() > checked
+            </#if> >Yes
+            <label for="noHideDOB"></label>
+            <input type="radio" name="hideDateOfBirth" id="noHideDOB"
+                   value="N" <#if !trader.hideDateOfBirth() > checked
+        </#if> >No
+        </td>
+        </tr>
+        <tr>
+            <td><label>Risk Tolerance</label></td>
+            <td>
+                <label for="low"></label>
+                <input type="radio" name="riskTolerance" id="low"
+                       value="LOW" <#if trader.riskTolerance().name() == "LOW" > checked
+            </#if> >Low
+            <label for="medium"></label>
+            <input type="radio" name="riskTolerance" id="medium"
+                   value="MEDIUM" <#if trader.riskTolerance().name() == "MEDIUM" > checked
+        </#if> >Medium
+        <label for="high"></label>
+        <input type="radio" name="riskTolerance" id="high"
+               value="HIGH" <#if trader.riskTolerance().name() == "HIGH" > checked
+    </#if> >High
+    </td>
+    </tr>
+    <tr>
+        <td><label>Auto Transfer Funds to Bank?</label></td>
+        <td>
+            <label for="yesAutoTransfer"></label>
+            <input type="radio" name="autoTransferToBank" id="yesAutoTransfer"
+                   value="Y" <#if trader.autoTransferToBank() > checked
+        </#if> >Yes
+        <label for="noAutoTransfer"></label>
+        <input type="radio" name="autoTransferToBank" id="noAutoTransfer"
+               value="N" <#if !trader.autoTransferToBank() > checked
+    </#if> >No
+    </td>
+    </tr>
+    <tr>
+        <td><label>Allow Reset to Trading Portfolio?</label></td>
+        <td>
+            <label for="yesAllowReset"></label>
+            <input type="radio" name="allowReset" id="yesAllowReset"
+                   value="Y" <#if trader.allowReset() > checked
+        </#if> >Yes
+        <label for="noAllowReset"></label>
+        <input type="radio" name="allowReset" id="noAllowReset"
+               value="N" <#if !trader.allowReset() > checked
+    </#if> >No
+    </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="submit" name="action" value="Update">
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+</form>
+
+<h5>Reset Password</h5>
+<#if updateAccountErrorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${updateAccountErrorMessage}<p>
+</#if>
+<form method="post" action="/member/updateAccount">
+    <table>
+        <tr>
+            <td>Email</td>
+            <td>${account.email()}</td>
+        </tr>
+        <tr>
+            <td><label for="password1">New Password</label></td>
+            <td><input type="password" id="password1" name="password1">
+                <input type="checkbox" id="showPassword1" onclick="showNewPassword()">
+                <label for="showPassword1">Show Password</label>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="password2">Confirm Password</label></td>
+            <td><input type="password" id="password2" name="password2">
+                <input type="checkbox" id="showPassword2" onclick="showConfirmPassword()">
+                <label for="showPassword2">Show Password</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" name="action" value="Reset">
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+</form>
+
+<#if !account.adminRequested() >
+<h5>Request Admin Access</h5>
+<form method="post" action="/member/requestAdmin">
+    <table>
+        <tr>
+            <td>Email</td>
+            <td>${account.email()}</td>
+        </tr>
+        <tr>
+            <td><label>Request Admin Access?</label></td>
+            <td>
+                <label for="yesAdmin"></label>
+                <input type="radio" name="admin" id="yesAdmin"
+                       value="Y">Yes
+                <label for="noAdmin"></label>
+                <input type="radio" name="admin" id="noAdmin"
+                       value="N" checked>No
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" name="action" value="Request">
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+</form>
+</#if>
+<#if !adminAccount >
+<h5>Deactivate Account</h5>
+<p style="color:red;">You can reset password to reactivate your account.</p>
+<#if deactivateAccountErrorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${deactivateAccountErrorMessage}<p>
+</#if>
+<form method="post" action="/member/deactivateProfile">
+    <table>
+        <tr>
+            <td>Email</td>
+            <td>${account.email()}</td>
+        </tr>
+        <tr>
+            <td><label>Deactivate?</label></td>
+            <td>
+                <label for="yesDeactivate"></label>
+                <input type="radio" name="deactivate" id="yesDeactivate"
+                       value="Y">Yes
+                <label for="noDeactivate"></label>
+                <input type="radio" name="deactivate" id="noDeactivate"
+                       value="N" checked>No
+            </td>
+        </tr>
+        <tr>
+            <td><label for="deactivationReason">Reason</label></td>
+            <td><input type="text" id="deactivationReason" name="reason"></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" name="action" value="Deactivate">
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+</form>
+</#if>
+</body>
+</html>

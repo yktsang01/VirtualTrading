@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Public Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Public Profile</h1>
+<script>includeHTML();</script>
+<table>
+    <tr>
+        <td>Email</td>
+        <td>${trader.email()}</td>
+    </tr>
+    <tr>
+        <td>Full Name</td>
+        <td>${trader.fullName()}</td>
+    </tr>
+    <#if !trader.hideDateOfBirth() >
+    <tr>
+        <td>Date of Birth</td>
+        <td>${trader.dateOfBirthAsDate()?date}</td>
+    </tr>
+</#if>
+<tr>
+    <td>Risk Tolerance</td>
+    <td>${trader.riskTolerance().name()}</td>
+</tr>
+<tr>
+    <td>Join Date</td>
+    <td>${trader.creationDateTimeAsDate()?datetime}</td>
+</tr>
+</table>
+</body>
+</html>

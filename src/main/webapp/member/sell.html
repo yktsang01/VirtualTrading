@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+    <script>
+        function calculateCost() {
+            var form = document.getElementById("sellForm");
+            form.method = "post";
+            form.action = "/member/sell";
+            form.submit();
+        }
+        function confirmSell() {
+            var estCost = document.getElementById("estimatedCost");
+            if (estCost.innerText.trim() == "0.0000") {
+                var result = confirm("Are you sure to sell without knowing the cost?");
+                if (result) {
+                    var form = document.getElementById("sellForm");
+                    form.method = "post";
+                    form.action = "/member/sell";
+                    form.submit();
+                }
+            } else {
+                var form = document.getElementById("sellForm");
+                form.method = "post";
+                form.action = "/member/sell";
+                form.submit();
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Sell</h1>
+<script>includeHTML();</script>
+<#if invalidStock >
+<p>Invalid stock. Go back to <a href="/member/outstandingTxn">outstanding transactions</a> to choose again.
+<p>
+    <#elseif noOutstandingShares?? >
+<p>${noOutstandingShares}
+<p>
+    <#else>
+    <#if errorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${errorMessage}
+<p>
+</#if>
+<form id="sellForm">
+    <table>
+        <tr>
+            <td>Symbol</td>
+            <td>${stock.symbol()}</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>${stock.name()}</td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td>${today?date}</td>
+        </tr>
+        <tr>
+            <td>Deed</td>
+            <td>SELL</td>
+        </tr>
+        <tr>
+            <td><label for="quantity">Quantity</label></td>
+            <td><input type="text" name="quantity" id="quantity"
+                <#if inputtedQuantity?? > value="${inputtedQuantity}"
+            </#if> > of possible ${outstandingQuantity}</td>
+        </tr>
+        <tr>
+            <td>Currency</td>
+            <td>${stock.currency()}</td>
+        </tr>
+        <tr>
+        <tr>
+            <td>Price</td>
+            <td>${stock.price()?string(",##0.0000")}</td>
+        </tr>
+        <tr>
+            <td>Estimated Cost</td>
+            <td>
+                <span id="estimatedCost"><#if estimatedCost?? > ${estimatedCost?string(",##0.0000")} <#else> 0.0000 </#if></span>
+                <input type="submit" name="action" value="Calculate Cost" onclick="calculateCost()">
+            </td>
+        </tr>
+        <tr>
+            <td><label>Auto Transfer Funds to Bank?</label></td>
+            <td>
+                <label for="yesAutoTransfer"></label>
+                <input type="radio" name="autoTransferToBank" id="yesAutoTransfer"
+                       value="Y" <#if trader.autoTransferToBank() > checked
+            </#if> >Yes
+            <label for="noAutoTransfer"></label>
+            <input type="radio" name="autoTransferToBank" id="noAutoTransfer"
+                   value="N" <#if !trader.autoTransferToBank() > checked
+        </#if> >No
+        </td>
+        </tr>
+        <tr>
+            <td><label for="bankAcctId">Auto Transfer Funds to Bank Account</label></td>
+            <td>
+                <select name="bankAcctId" id="bankAcctId">
+                    <option value="#">All bank accounts</option>
+                    <#list bankAccounts as bankAccount >
+                    <option value="${bankAccount.bankAccountIdAsString()}">${bankAccount.currency()}
+                        ${bankAccount.bankName()} ${bankAccount.bankAccountNumber()}
+                    </option>
+                </#list>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <input type="hidden" name="symbol" value="${stock.symbol()}">
+                <input type="hidden" name="name" value="${stock.name()}">
+                <input type="hidden" name="currency" value="${stock.currency()}">
+                <input type="hidden" name="transPrice" value="${stock.price()}">
+                <input type="hidden" name="action" value="Sell">
+                <button type="button" onclick="confirmSell()">Sell</button>
+                <button type="button" onclick="window.location='/member/outstandingTxn';">Cancel</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</#if>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Registration</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/common_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <img src="img/logo.jpg" alt="Logo">
+    <a href="/">Home</a>
+    <a href="/register">Member Registration</a>
+    <a href="/login?from=member">Member Login</a>
+</div>
+<h1>Member Registration</h1>
+<#if errorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${errorMessage}
+<p>
+</#if>
+<form method="post" action="/register">
+    <table>
+        <tr>
+            <td><label for="email">Email</label></td>
+            <td><input type="email" id="email" name="email"></td>
+        </tr>
+        <tr>
+            <td><label for="password1">Password</label></td>
+            <td><input type="password" id="password1" name="password1">
+                <input type="checkbox" id="showPassword1" onclick="showNewPassword()">
+                <label for="showPassword1">Show Password</label>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="password2">Confirm Password</label></td>
+            <td><input type="password" id="password2" name="password2">
+                <input type="checkbox" id="showPassword2" onclick="showConfirmPassword()">
+                <label for="showPassword2">Show Password</label>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="fullName">Full Name</label></td>
+            <td><input type="text" id="fullName" name="fullName"></td>
+        </tr>
+        <tr>
+            <td><label>Date of Birth</label></td>
+            <td><label for="dateOfBirthMonth"></label>
+                <select name="dateOfBirthMonth" id="dateOfBirthMonth">
+                    <option value="0">MMMMM</option>
+                    <option value="1">JANUARY</option>
+                    <option value="2">FEBRUARY</option>
+                    <option value="3">MARCH</option>
+                    <option value="4">APRIL</option>
+                    <option value="5">MAY</option>
+                    <option value="6">JUNE</option>
+                    <option value="7">JULY</option>
+                    <option value="8">AUGUST</option>
+                    <option value="9">SEPTEMBER</option>
+                    <option value="10">OCTOBER</option>
+                    <option value="11">NOVEMBER</option>
+                    <option value="12">DECEMBER</option>
+                </select>
+                <label for="dateOfBirthDay"></label>
+                <select name="dateOfBirthDay" id="dateOfBirthDay">
+                    <option value="0">DD</option>
+                    <script>
+                        for (let i = 1; i <= 31; i++) {
+                            document.write("<option value='"+i+"'>"+i+"</option>");
+                        }
+                    </script>
+                </select>
+                <label for="dateOfBirthYear"></label>
+                <select name="dateOfBirthYear" id="dateOfBirthYear">
+                    <option value="0">YYYY</option>
+                    <script>
+                        const d = new Date();
+                        let currentYear = d.getFullYear();
+                        let startYear = currentYear - 100;
+                        for (let i = currentYear; i >= startYear; i--) {
+                            document.write("<option value='"+i+"'>"+i+"</option>");
+                        }
+                    </script>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Hide Date of Birth?</label></td>
+            <td><label for="yesHideDOB"></label>
+                <input type="radio" name="hideDateOfBirth" id="yesHideDOB" value="Y">Yes
+                <label for="noHideDOB"></label>
+                <input type="radio" name="hideDateOfBirth" id="noHideDOB" value="N">No
+            </td>
+        </tr>
+        <tr>
+            <td><label>Risk Tolerance</label></td>
+            <td><label for="low"></label>
+                <input type="radio" name="riskTolerance" id="low" value="LOW">Low
+                <label for="medium"></label>
+                <input type="radio" name="riskTolerance" id="medium" value="MEDIUM">Medium
+                <label for="high"></label>
+                <input type="radio" name="riskTolerance" id="high" value="HIGH">High
+            </td>
+        </tr>
+        <tr>
+            <td><label>Auto Transfer Funds to Bank?</label></td>
+            <td><label for="yesAutoTransfer"></label>
+                <input type="radio" name="autoTransferToBank" id="yesAutoTransfer" value="Y">Yes
+                <label for="noAutoTransfer"></label>
+                <input type="radio" name="autoTransferToBank" id="noAutoTransfer" value="N">No
+            </td>
+        </tr>
+        <tr>
+            <td><label>Allow Reset to Trading Portfolio?</label></td>
+            <td><label for="yesAllowReset"></label>
+                <input type="radio" name="allowReset" id="yesAllowReset" value="Y">Yes
+                <label for="noAllowReset"></label>
+                <input type="radio" name="allowReset" id="noAllowReset" value="N">No
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" name="action" value="Register"></td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

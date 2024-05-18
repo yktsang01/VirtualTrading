@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio Summary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Portfolio Summary</h1>
+<script>includeHTML();</script>
+<#if errorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${errorMessage}
+<p>
+</#if>
+<form method="post" action="/member/createPortfolio">
+    <table>
+        <tr>
+            <td><label for="portName">Name</label></td>
+            <td><input type="text" name="portName" id="portName"></td>
+        </tr>
+        <tr>
+            <td><label for="portCcy">Currency</label></td>
+            <td>
+                <select name="portCcy" id="portCcy">
+                    <option value="#">Currencies</option>
+                    <#list activeCurrencies as curr >
+                    <option value="${curr.getCurrencyCode()}"
+                    <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >
+                ${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+                </option>
+            </#list>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <input type="hidden" name="selectedCcy" value="${selectedCcy}">
+                <input type="hidden" name="pageNum" value="${pageNum}">
+                <input type="hidden" name="pageSize" value="${pageSize}">
+                <input type="submit" name="action" value="Create">
+            </td>
+        </tr>
+    </table>
+</form>
+<img src="../img/spacer.gif" height="50px"><br>
+<label for="portfolioCurrency"></label>
+<select name="portfolioCurrency" id="portfolioCurrency" onchange="refreshPortfolio()">
+    <option value="#"
+    <#if selectedCcy == "" > selected </#if> >All currencies</option>
+<#list activeCurrencies as curr >
+<option value="${curr.getCurrencyCode()}"
+<#if selectedCcy == curr.getCurrencyCode() > selected
+</#if> >
+${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+</option>
+</#list>
+</select>
+<table>
+    <tr>
+        <th>Portfolio Name</th>
+        <th>Currency</th>
+        <th>Invested Amount</th>
+        <th>Current Amount</th>
+        <th>Profit &amp; Loss</th>
+    </tr>
+    <#list portfolios as port >
+    <tr>
+        <td><a href="/member/portfolioDetails?id=${port.portfolioIdAsString()}">${port.portfolioName()}</a></td>
+        <td>${port.currency()}</td>
+        <td>${port.investedAmount()?string(",##0.0000")}</td>
+        <td>${port.currentAmount()?string(",##0.0000")}</td>
+        <td>${port.profitLossAmount()?string(",##0.0000")}</td>
+    </tr>
+</#list>
+<#if hasRecords >
+<tr>
+    <td colspan="5" style="text-align:center;">
+        <a href="/member/portfolio?${first}">first</a>
+        <img src="../img/spacer.gif" width="5px">
+        <#if hasPrev ><a href="/member/portfolio?${prev}">prev</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <#if hasNext ><a href="/member/portfolio?${next}">next</a>
+    <img src="../img/spacer.gif" width="5px"></#if>
+<a href="/member/portfolio?${last}">last</a>
+</td>
+</tr>
+</#if>
+</table>
+</body>
+</html>

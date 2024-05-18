@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>World Indices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>World Indices</h1>
+<script>includeHTML();</script>
+<label for="indexCurrency"></label>
+<select name="indexCurrency" id="indexCurrency" onchange="refreshIndex()">
+    <option value="#"
+    <#if selectedCcy == "" > selected </#if> >All currencies</option>
+<#list activeCurrencies as curr >
+<option value="${curr.getCurrencyCode()}"
+<#if selectedCcy == curr.getCurrencyCode() > selected
+</#if> >
+${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+</option>
+</#list>
+</select>
+<table>
+    <tr>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>Stock Exchange</th>
+        <th>Currency</th>
+        <th>Price</th>
+        <th>Change</th>
+        <th>Change Percent</th>
+        <th>Last Trade Time</th>
+        <th>Previous Close</th>
+        <th>Open</th>
+        <th>Day Low</th>
+        <th>Day High</th>
+        <th>52-Week Low</th>
+        <th>52-Week High</th>
+        <th>Volume</th>
+        <th>Average Volume</th>
+    </tr>
+    <#list indices as stock>
+    <tr>
+        <td>${stock.getSymbol()}</td>
+        <td>${stock.getName()}</td>
+        <td>${stock.getStockExchange()}</td>
+        <td>${stock.getCurrency()}</td>
+        <td>${stock.getQuote().getPrice()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getChange()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getChangeInPercent()}%</td>
+        <td>${stock.getQuote().getLastTradeTime().getTime()?datetime}</td>
+        <td>${stock.getQuote().getPreviousClose()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getOpen()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getDayLow()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getDayHigh()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getYearLow()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getYearHigh()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getVolume()}</td>
+        <td>${stock.getQuote().getAvgVolume()}</td>
+    </tr>
+</#list>
+<#if hasRecords >
+<tr>
+    <td colspan="16" style="text-align:center;">
+        <a href="/member/indices?${first}">first</a>
+        <img src="../img/spacer.gif" width="5px">
+        <#if hasPrev ><a href="/member/indices?${prev}">prev</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <#if hasNext ><a href="/member/indices?${next}">next</a>
+    <img src="../img/spacer.gif" width="5px"></#if>
+<a href="/member/indices?${last}">last</a>
+</td>
+</tr>
+</#if>
+</table>
+</body>
+</html>

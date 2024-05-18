@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Transactions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Account Transactions</h1>
+<script>includeHTML();</script>
+<label for="accountTxnCurrency"></label>
+<select name="accountTxnCurrency" id="accountTxnCurrency" onchange="refreshAccountTxn()">
+    <option value="#"
+    <#if selectedCcy == "" > selected </#if> >All currencies</option>
+<#list activeCurrencies as curr >
+<option value="${curr.getCurrencyCode()}"
+<#if selectedCcy == curr.getCurrencyCode() > selected
+</#if> >
+${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+</option>
+</#list>
+</select>
+<table>
+    <tr>
+        <th>Transaction Datetime</th>
+        <th>Currency</th>
+        <th>Description</th>
+    </tr>
+    <#list accountTransactions as txn >
+    <tr>
+        <td>${txn.transactionDateTimeAsDate()?datetime}</td>
+        <td>${txn.currency()}</td>
+        <td>${txn.transactionDescription()}</td>
+    </tr>
+</#list>
+<#if hasRecords >
+<tr>
+    <td colspan="3" style="text-align:center;">
+        <a href="/member/accountTxn?${first}">first</a>
+        <img src="../img/spacer.gif" width="5px">
+        <#if hasPrev ><a href="/member/accountTxn?${prev}">prev</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <#if hasNext ><a href="/member/accountTxn?${next}">next</a>
+    <img src="../img/spacer.gif" width="5px"></#if>
+<a href="/member/accountTxn?${last}">last</a>
+</td>
+</tr>
+</#if>
+</table>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trading Transactions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Trading Transactions</h1>
+<script>includeHTML();</script>
+<#if errorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${errorMessage}
+<p>
+</#if>
+<form method="post" action="/member/linkToPortfolio">
+    <table>
+        <tr>
+            <td>
+                <input type="hidden" name="selectedCcy" value="${selectedCcy}">
+                <input type="hidden" name="pageNum" value="${pageNum}">
+                <input type="hidden" name="pageSize" value="${pageSize}">
+                <input type="submit" name="action" value="Add to Portfolio">
+                <label for="portfolio"></label>
+                <select name="portfolio" id="portfolio" onchange="checkNewOption()">
+                    <option value="#">Portfolios</option>
+                    <option value="New">New portfolio</option>
+                    <#list portfolios as port >
+                    <option value="${port.portfolioIdAsString()}">${port.portfolioName()} (${port.currency()})</option>
+                </#list>
+                </select>
+                <input type="text" name="portName" id="portName" disabled>
+                <select name="portCcy" id="portCcy" disabled>
+                    <option value="#">Currencies</option>
+                    <#list activeCurrencies as curr >
+                    <option value="${curr.getCurrencyCode()}"
+                    <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >
+                ${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+                </option>
+            </#list>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="../img/spacer.gif" height="50px"></td>
+        </tr>
+        <tr>
+            <td>
+                <label for="tradingTxnCurrency"></label>
+                <select name="tradingTxnCurrency" id="tradingTxnCurrency" onchange="refreshTradingTxn()">
+                    <option value="#"
+                    <#if selectedCcy == "" > selected </#if> >All currencies</option>
+                <#list activeCurrencies as curr >
+                <option value="${curr.getCurrencyCode()}"
+                <#if selectedCcy == curr.getCurrencyCode() > selected
+            </#if> >
+            ${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+            </option>
+        </#list>
+        </select>
+        </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <th>Transaction Date</th>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Deed</th>
+                        <th>Quantity</th>
+                        <th>Currency</th>
+                        <th>Price</th>
+                        <th>Cost</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    <#list tradingTransactions as txn >
+                    <tr>
+                        <td>${txn.transactionDateAsDate()?date}</td>
+                        <td>${txn.tradingSymbol()}</td>
+                        <td>${txn.tradingSymbolName()}</td>
+                        <td>${txn.tradingDeed().name()}</td>
+                        <td>${txn.quantity()}</td>
+                        <td>${txn.transactionCurrency()}</td>
+                        <td>${txn.transactionPrice()?string(",##0.0000")}</td>
+                        <td>${txn.transactionCost()?string(",##0.0000")}</td>
+                        <td>
+                            <button type="button"
+                                    onclick="window.location='/member/buy?s=${txn.encodedSymbol()}';">
+                                Buy
+                            </button>
+                            <button type="button"
+                                    onclick="window.location='/member/sell?s=${txn.encodedSymbol()}';">
+                                Sell
+                            </button>
+                        </td>
+                        <td>
+                            <#if !txn.portfolioId()?? >
+                            <input type="checkbox" name="link" id="${txn.tradingTransactionIdAsString()}"
+                                   value="${txn.tradingTransactionIdAsString()}">
+                        </#if>
+            </td>
+        </tr>
+    </#list>
+    <#if hasRecords >
+    <tr>
+        <td colspan="10" style="text-align:center;">
+            <a href="/member/tradingTxn?${first}">first</a>
+            <img src="../img/spacer.gif" width="5px">
+            <#if hasPrev ><a href="/member/tradingTxn?${prev}">prev</a>
+            <img src="../img/spacer.gif" width="5px"></#if>
+        <#if hasNext ><a href="/member/tradingTxn?${next}">next</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <a href="/member/tradingTxn?${last}">last</a>
+    </td>
+    </tr>
+</#if>
+</table>
+</td>
+</tr>
+</table>
+</form>
+</body>
+</html>

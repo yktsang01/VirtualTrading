@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<#if hasValidSession >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="js/member_script.js"></script>
+<div class="navbar">
+    <div w3-include-html="member/memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="member/memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<#else>
+<div class="navbar">
+    <img src="img/logo.jpg" alt="Logo">
+    <a href="/">Home</a>
+    <a href="/register">Member Registration</a>
+    <a href="/login?from=member">Member Login</a>
+</div>
+</#if>
+<h1>Welcome to Virtual Trading</h1>
+<script>includeHTML();</script>
+<p>Are you currently an investor or you want to become one?
+    Are you afraid to lose your money during intense stock market fluctuations?
+    Do you want to access the information from various world stock exchanges?</p>
+<p>Virtual Trading provides a simulated (virtual) system or platform for novice or amateur investors.
+    It consolidates financial information from various world stock exchanges into a single system.</p>
+</body>
+</html>

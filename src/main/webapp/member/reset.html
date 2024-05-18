@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+    <script>
+        function confirmReset() {
+            var result = confirm("Are you sure to reset? This cannot be undone.");
+            if (result) {
+                var form = document.getElementById("resetForm");
+                form.method = "post";
+                form.action = "/member/reset";
+                form.submit();
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Reset Portfolio</h1>
+<script>includeHTML();</script>
+<p>You have the option of resetting the entire portfolio or only the specific currency. Only active currencies can be
+    reset.</p>
+<p>By resetting your portfolio, the following will happen:</p>
+<ul>
+    <li>All trading transactions, under the specific currency if applicable, you have done will be deleted</li>
+    <li>All portfolios, under the specific currency if applicable, you have created will be deleted</li>
+    <li>All items in the watch list, under the specific currency if applicable, will be deleted</li>
+    <li>All bank accounts (in use or not), under the specific currency if applicable, you have added will be deleted
+    </li>
+    <li>All bank transactions, under the specific currency if applicable, created will be deleted</li>
+    <li>All account balances, under the specific currency if applicable, you have deposited funds will be deleted</li>
+    <li>All account transactions, under the specific currency if applicable, created will be deleted</li>
+</ul>
+<#if errorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${errorMessage}
+<p>
+</#if>
+<form id="resetForm">
+    <label for="resetCurrency"></label>
+    <select name="resetCurrency" id="resetCurrency">
+        <option value="#">All currencies</option>
+        <#list activeCurrencies as curr >
+        <option value="${curr.getCurrencyCode()}">
+            ${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+        </option>
+    </#list>
+    </select>
+    <button type="button" onclick="confirmReset()">Reset</button>
+</form>
+
+</body>
+</html>

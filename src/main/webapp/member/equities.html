@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Common Equities</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Common Equities</h1>
+<script>includeHTML();</script>
+<label for="equityCurrency"></label>
+<select name="equityCurrency" id="equityCurrency" onchange="refreshEquity()">
+    <option value="#"
+    <#if selectedCcy == "" > selected </#if> >All currencies</option>
+<#list activeCurrencies as curr >
+<option value="${curr.getCurrencyCode()}"
+<#if selectedCcy == curr.getCurrencyCode() > selected
+</#if> >
+${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+</option>
+</#list>
+</select>
+<table>
+    <tr>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>Stock Exchange</th>
+        <th>Currency</th>
+        <th>Price</th>
+        <th>Change</th>
+        <th>Change Percent</th>
+        <th>Last Trade Time</th>
+        <th>Previous Close</th>
+        <th>Open</th>
+        <th>Day Low</th>
+        <th>Day High</th>
+        <th>52-Week Low</th>
+        <th>52-Week High</th>
+        <th>Volume</th>
+        <th>Average Volume</th>
+        <th>Ex-Dividend Date</th>
+        <th>Dividend Pay Date</th>
+        <th>Dividend Annual Yield</th>
+        <th>Dividend Annual Yield Percent</th>
+        <th>Earnings per Share EPS</th>
+        <th>Market Capitalization</th>
+        <th>Price-to-Earning P/E Ratio</th>
+        <th>Earnings Announcements</th>
+    </tr>
+    <#list equities as stock>
+    <tr>
+        <td>${stock.getSymbol()}</td>
+        <td>${stock.getName()}</td>
+        <td>${stock.getStockExchange()}</td>
+        <td>${stock.getCurrency()}</td>
+        <td>${stock.getQuote().getPrice()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getChange()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getChangeInPercent()}%</td>
+        <td>${stock.getQuote().getLastTradeTime().getTime()?datetime}</td>
+        <td>${stock.getQuote().getPreviousClose()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getOpen()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getDayLow()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getDayHigh()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getYearLow()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getYearHigh()?string(",##0.0000")}</td>
+        <td>${stock.getQuote().getVolume()}</td>
+        <td>${stock.getQuote().getAvgVolume()}</td>
+        <td><#if stock.getDividend().getExDate()?? > ${stock.getDividend().getExDate().getTime()?datetime}</#if></td>
+        <td><#if stock.getDividend().getPayDate()?? > ${stock.getDividend().getPayDate().getTime()?datetime}</#if></td>
+        <td><#if stock.getDividend().getAnnualYield()?? > ${stock.getDividend().getAnnualYield()}</#if></td>
+        <td><#if stock.getDividend().getAnnualYieldPercent()?? > ${stock.getDividend().getAnnualYieldPercent()}%</#if></td>
+        <td><#if stock.getStats().getEps()?? > ${stock.getStats().getEps()}</#if></td>
+        <td><#if stock.getStats().getMarketCap()?? > ${stock.getStats().getMarketCap()}</#if></td>
+        <td><#if stock.getStats().getPe()?? > ${stock.getStats().getPe()}</#if></td>
+        <td><#if stock.getStats().getEarningsAnnouncement()?? >
+            ${stock.getStats().getEarningsAnnouncement().getTime()?datetime}
+        </#if></td>
+    </tr>
+</#list>
+<#if hasRecords >
+<tr>
+    <td colspan="24" style="text-align:center;">
+        <a href="/member/equities?${first}">first</a>
+        <img src="../img/spacer.gif" width="5px">
+        <#if hasPrev ><a href="/member/equities?${prev}">prev</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <#if hasNext ><a href="/member/equities?${next}">next</a>
+    <img src="../img/spacer.gif" width="5px"></#if>
+<a href="/member/equities?${last}">last</a>
+</td>
+</tr>
+</#if>
+</table>
+</body>
+</html>

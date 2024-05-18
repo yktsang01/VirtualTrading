@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Portfolio Details</h1>
+<script>includeHTML();</script>
+<#if portfolioMessage?? >
+<p>${portfolioMessage}
+<p>
+    <#else>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Currency</th>
+        <th>Invested Amount</th>
+        <th>Current Amount</th>
+        <th>Profit &amp; Loss</th>
+    </tr>
+    <tr>
+        <td>${portfolio.portfolioName()}</td>
+        <td>${portfolio.currency()}</td>
+        <td>${portfolio.investedAmount()?string(",##0.0000")}</td>
+        <td>${portfolio.currentAmount()?string(",##0.0000")}</td>
+        <td>${portfolio.profitLossAmount()?string(",##0.0000")}</td>
+    </tr>
+</table>
+<img src="../img/spacer.gif" height="50px"><br>
+<form method="post" action="/member/unlinkFromPortfolio">
+    <input type="hidden" name="portfolioId" value="${portfolio.portfolioIdAsString()}">
+    <input type="hidden" name="pageNum" value="${pageNum}">
+    <input type="hidden" name="pageSize" value="${pageSize}">
+    <input type="submit" name="action" value="Remove from Portfolio">
+    <table>
+        <tr>
+            <th>Transaction Date</th>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Deed</th>
+            <th>Quantity</th>
+            <th>Currency</th>
+            <th>Price</th>
+            <th>Cost</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+        <#list tradingTransactions as txn >
+        <tr>
+            <td>${txn.transactionDateAsDate()?date}</td>
+            <td>${txn.tradingSymbol()}</td>
+            <td>${txn.tradingSymbolName()}</td>
+            <td>${txn.tradingDeed().name()}</td>
+            <td>${txn.quantity()}</td>
+            <td>${txn.transactionCurrency()}</td>
+            <td>${txn.transactionPrice()?string(",##0.0000")}</td>
+            <td>${txn.transactionCost()?string(",##0.0000")}</td>
+            <td>
+                <button type="button"
+                        onclick="window.location='/member/buy?s=${txn.encodedSymbol()}';">
+                    Buy
+                </button>
+                <button type="button"
+                        onclick="window.location='/member/sell?s=${txn.encodedSymbol()}';">
+                    Sell
+                </button>
+            </td>
+            <td>
+                <input type="checkbox" name="unlink" id="${txn.tradingTransactionIdAsString()}"
+                       value="${txn.tradingTransactionIdAsString()}">
+            </td>
+        </tr>
+    </#list>
+    <#if hasRecords >
+    <tr>
+        <td colspan="10" style="text-align:center;">
+            <a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${first}">first</a>
+            <img src="../img/spacer.gif" width="5px">
+            <#if hasPrev ><a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${prev}">prev</a>
+            <img src="../img/spacer.gif" width="5px"></#if>
+        <#if hasNext ><a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${next}">next</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${last}">last</a>
+    </td>
+    </tr>
+</#if>
+</table>
+</form>
+</#if>
+</body>
+</html>

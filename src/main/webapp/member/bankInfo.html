@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Information</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Bank Information</h1>
+<script>includeHTML();</script>
+<p>You can do the following:</p>
+<ul>
+    <li>View available bank accounts</li>
+    <li>Add bank accounts</li>
+    <li><a href="/member/bankTxn">View bank transactions</a></li>
+    <li><a href="/member/transferFunds">Transfer funds</a></li>
+</ul>
+<label for="bankCurrency"></label>
+<select name="bankCurrency" id="bankCurrency" onchange="refreshBank()">
+    <option value="#"
+    <#if selectedCcy == "" > selected </#if> >All currencies</option>
+<#list activeCurrencies as curr >
+<option value="${curr.getCurrencyCode()}"
+<#if selectedCcy == curr.getCurrencyCode() > selected
+</#if> >
+${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+</option>
+</#list>
+</select>
+<table>
+    <tr>
+        <th>Currency</th>
+        <th>Bank Name</th>
+        <th>Bank Account Number</th>
+        <th>&nbsp;</th>
+    </tr>
+    <#list bankAccounts as bankAccount >
+    <tr>
+        <td><a href="/member/bankTxn?ccy=${bankAccount.currency()}">${bankAccount.currency()}</a></td>
+        <td>${bankAccount.bankName()}</td>
+        <td>${bankAccount.bankAccountNumber()}</td>
+        <td>
+            <button type="submit"
+                    onclick="window.location='/member/obsoleteBank?id=${bankAccount.bankAccountIdAsString()}';">
+                Not in use
+            </button>
+        </td>
+    </tr>
+</#list>
+<#if hasRecords >
+<tr>
+    <td colspan="4" style="text-align:center;">
+        <a href="/member/bankInfo?${first}">first</a>
+        <img src="../img/spacer.gif" width="5px">
+        <#if hasPrev ><a href="/member/bankInfo?${prev}">prev</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <#if hasNext ><a href="/member/bankInfo?${next}">next</a>
+    <img src="../img/spacer.gif" width="5px"></#if>
+<a href="/member/bankInfo?${last}">last</a>
+</td>
+</tr>
+</#if>
+</table>
+
+<h5>Add Bank Account</h5>
+<#if errorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${errorMessage}<p>
+</#if>
+<form method="post" action="/member/addBank">
+    <table>
+        <tr>
+            <td><label for="currency">Currency</label></td>
+            <td>
+                <select name="currency" id="currency">
+                    <option value="#">All currencies</option>
+                    <#list activeCurrencies as curr >
+                    <option value="${curr.getCurrencyCode()}"
+                    <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >
+                ${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+                </option>
+            </#list>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="bankName">Bank Name</label></td>
+            <td><input type="text" name="bankName" id="bankName"></td>
+        </tr>
+        <tr>
+            <td><label for="bankAccountNumber">Bank Account Number</label></td>
+            <td><input type="text" name="bankAccountNumber" id="bankAccountNumber"></td>
+        </tr>
+        <td>
+            <input type="hidden" name="selectedCcy" value="${selectedCcy}">
+            <input type="hidden" name="pageNum" value="${pageNum}">
+            <input type="hidden" name="pageSize" value="${pageSize}">
+            <input type="submit" name="action" value="Add">
+        </td>
+        <td></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Outstanding Transactions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Outstanding Transactions</h1>
+<script>includeHTML();</script>
+<label for="osTxnCurrency"></label>
+<select name="osTxnCurrency" id="osTxnCurrency" onchange="refreshOutstandingTxn()">
+    <option value="#"
+    <#if selectedCcy == "" > selected </#if> >All currencies</option>
+<#list activeCurrencies as curr >
+<option value="${curr.getCurrencyCode()}"
+<#if selectedCcy == curr.getCurrencyCode() > selected
+</#if> >
+${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+</option>
+</#list>
+</select>
+<table>
+    <tr>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>O/S Quantity</th>
+        <th>Currency</th>
+        <th>Current Price</th>
+        <th>Current Amount</th>
+        <th>&nbsp;</th>
+    </tr>
+    <#list osTransactions as osTxn >
+    <tr>
+        <td>${osTxn.getTradingSymbol()}</td>
+        <td>${osTxn.getSymbolName()}</td>
+        <td>${osTxn.getOutstandingQuantity()}</td>
+        <td>${osTxn.getCurrency()}</td>
+        <td>${osTxn.getCurrentPrice()?string(",##0.0000")}</td>
+        <td>${osTxn.getCurrentAmount()?string(",##0.0000")}</td>
+        <td>
+            <button type="button"
+                    onclick="window.location='/member/buy?s=${osTxn.getEncodedSymbol()}';">
+                Buy
+            </button>
+            <button type="button"
+                    onclick="window.location='/member/sell?s=${osTxn.getEncodedSymbol()}';">
+                Sell
+            </button>
+        </td>
+    </tr>
+</#list>
+<#if hasRecords >
+<tr>
+    <td colspan="7" style="text-align:center;">
+        <a href="/member/outstandingTxn?${first}">first</a>
+        <img src="../img/spacer.gif" width="5px">
+        <#if hasPrev ><a href="/member/outstandingTxn?${prev}">prev</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <#if hasNext ><a href="/member/outstandingTxn?${next}">next</a>
+    <img src="../img/spacer.gif" width="5px"></#if>
+<a href="/member/outstandingTxn?${last}">last</a>
+</td>
+</tr>
+</#if>
+</table>
+</body>
+</html>

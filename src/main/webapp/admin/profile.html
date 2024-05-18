@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/admin_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="adminTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropAdmin()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="adminDropdown">
+            <div w3-include-html="adminDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Admin Profile</h1>
+<script>includeHTML();</script>
+<p>You can do the following:</p>
+<ul>
+    <li>View &amp; grant members who <a href="/admin/adminRequests">requested admin access</a></li>
+    <li>View &amp; revoke members who <a href="/admin/adminAccess">have admin access</a></li>
+    <li>View &amp; amend <a href="/admin/isoData">country and currency codes</a> available to members for trading</li>
+</ul>
+</body>
+</html>

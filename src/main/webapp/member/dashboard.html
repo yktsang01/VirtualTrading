@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Dashboard</h1>
+<script>includeHTML();</script>
+<label for="dashboardCurrency"></label>
+<select name="dashboardCurrency" id="dashboardCurrency" onchange="refreshDashboard()">
+    <option value="#"
+    <#if selectedCcy == "" > selected </#if> >All currencies</option>
+<#list activeCurrencies as curr >
+<option value="${curr.getCurrencyCode()}"
+<#if selectedCcy == curr.getCurrencyCode() > selected
+</#if> >
+${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+</option>
+</#list>
+</select>
+<table>
+    <td style="vertical-align:top;">
+        <!-- account balance -->
+        <table>
+            <tr>
+                <th>Currency</th>
+                <th>Investment Balance</th>
+                <th>Available Balance</th>
+            </tr>
+            <#list balances as balance >
+            <tr>
+                <td><a href="/member/accountTxn?ccy=${balance.currency()}">${balance.currency()}</a></td>
+                <#if balance.decimalPlacesToDisplay() == 0 >
+                <td>${balance.tradingAmount()?string(",##0")}</td>
+                <td>${balance.nonTradingAmount()?string(",##0")}</td>
+                <#elseif balance.decimalPlacesToDisplay() == 3 >
+                <td>${balance.tradingAmount()?string(",##0.000")}</td>
+                <td>${balance.nonTradingAmount()?string(",##0.000")}</td>
+                <#elseif balance.decimalPlacesToDisplay() == 4 >
+                <td>${balance.tradingAmount()?string(",##0.0000")}</td>
+                <td>${balance.nonTradingAmount()?string(",##0.0000")}</td>
+                <#else>
+                <td>${balance.tradingAmount()?string(",##0.00")}</td>
+                <td>${balance.nonTradingAmount()?string(",##0.00")}</td>
+            </#if>
+            </tr>
+        </#list>
+        <tr>
+    <td colspan="3">Only last 5 created shown. <a href="/member/accountBalance">See all</a></td>
+    </tr>
+</table>
+</td>
+<td><img src="../img/spacer.gif" width="50px"></td>
+<td style="vertical-align:top;">
+    <!-- portfolio summary -->
+    <table>
+        <tr>
+            <th>Portfolio Name</th>
+            <th>Currency</th>
+            <th>Invested Amount</th>
+        </tr>
+        <#list portfolios as port >
+        <tr>
+            <td><a href="/member/portfolioDetails?id=${port.portfolioIdAsString()}">${port.portfolioName()}</a></td>
+            <td>${port.currency()}</td>
+            <td>${port.investedAmount()?string(",##0.0000")}</td>
+        </tr>
+    </#list>
+    <tr>
+<td colspan="3">Only last 5 created shown. <a href="/member/portfolio">See all</a></td>
+</tr>
+</table>
+</td>
+</table>
+
+<h5>Search Results</h5>
+<#if errorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${errorMessage}<p>
+</#if>
+<form method="post" action="/member/search">
+    <label for="symbol"></label>
+    <input type="radio" name="stockType" id="symbol" value="symbol">Symbol
+    <label for="name"></label>
+    <input type="radio" name="stockType" id="name" value="name">Name
+    <label for="searchCriteria"></label>
+    <input type="text" name="searchCriteria" id="searchCriteria">
+    <input type="hidden" name="searchSelectedCcy" value="${selectedCcy}">
+    <input type="hidden" name="wlPageNum" value="${wlPageNum}">
+    <input type="hidden" name="wlPageSize" value="${wlPageSize}">
+    <input type="hidden" name="srPageNum" value="${srPageNum}">
+    <input type="hidden" name="srPageSize" value="${srPageSize}">
+    <input type="submit" name="action" value="Search">
+</form>
+
+<#if hasSearchResults >
+<form method="post" action="/member/addToWatchList">
+    <input type="submit" name="action" value="Add to Watch List">
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Currency</th>
+            <th>Price</th>
+            <th>Add</th>
+            <th>&nbsp;</th>
+        </tr>
+        <#list searchResults as sr >
+        <tr>
+            <td>${sr.symbol()}</td>
+            <td>${sr.name()}</td>
+            <td>${sr.currency()}</td>
+            <td>${sr.price()?string(",##0.0000")}</td>
+            <td>
+                <label for="${sr.symbol()}"></label>
+                <input type="hidden" name="addSelectedCcy" value="${selectedCcy}">
+                <input type="checkbox" name="add" id="${sr.symbol()}" value="${sr.symbol()}">
+            </td>
+            <td>
+                <#if !sr.index() >
+                <button type="button"
+                        onclick="window.location='/member/buy?s=${sr.encodedSymbol()}';">
+                    Buy
+                </button>
+            </#if>
+            </td>
+        </tr>
+    </#list>
+    <tr>
+        <td colspan="6" style="text-align:center;">
+            <a href="/member/dashboard?${wlCurrent}&${srFirst}">first</a>
+            <img src="../img/spacer.gif" width="5px">
+            <#if srHasPrev ><a href="/member/dashboard?${wlCurrent}&${srPrev}">prev</a>
+            <img src="../img/spacer.gif" width="5px"></#if>
+        <#if srHasNext ><a href="/member/dashboard?${wlCurrent}&${srNext}">next</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <a href="/member/dashboard?${wlCurrent}&${srLast}">last</a>
+    </td>
+    </tr>
+    </table>
+</form>
+</#if>
+
+<h5>Watch List</h5>
+<form method="post" action="/member/removeFromWatchList">
+    <input type="submit" name="action" value="Remove from Watch List">
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Currency</th>
+            <th>Price</th>
+            <th>Remove</th>
+        </tr>
+        <#list watchList as wl >
+        <tr>
+            <td><span title="${wl.name()}">${wl.symbol()}</span></td>
+            <td>${wl.currency()}</td>
+            <td>${wl.price()?string(",##0.0000")}</td>
+            <td>
+                <label for="${wl.symbol()}"></label>
+                <input type="hidden" name="removeSelectedCcy" value="${selectedCcy}">
+                <input type="checkbox" name="remove" id="${wl.symbol()}" value="${wl.symbol()}">
+            </td>
+        </tr>
+    </#list>
+    <#if hasWatchListRecords >
+    <tr>
+        <td colspan="4" style="text-align:center;">
+            <a href="/member/dashboard?${wlFirst}&${srCurrent}">first</a>
+            <img src="../img/spacer.gif" width="5px">
+            <#if wlHasPrev ><a href="/member/dashboard?${wlPrev}&${srCurrent}">prev</a>
+            <img src="../img/spacer.gif" width="5px"></#if>
+        <#if wlHasNext ><a href="/member/dashboard?${wlNext}&${srCurrent}">next</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <a href="/member/dashboard?${wlLast}&${srCurrent}">last</a>
+    </td>
+    </tr>
+</#if>
+</table>
+</form>
+</body>
+</html>

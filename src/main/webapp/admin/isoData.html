@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ISO Country & Currency Codes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/admin_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="adminTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropAdmin()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="adminDropdown">
+            <div w3-include-html="adminDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>ISO Country &amp; Currency Codes</h1>
+<div w3-include-html="isoSection.html"></div>
+<script>includeHTML();</script>
+<p><a href="/admin/isoCreation">Create new ISO record</a></p>
+<form method="post" action="/admin/activateIsoData">
+    <input type="submit" name="action" value="Activate">
+    <table>
+        <tr>
+            <th>Country Alpha-2 Code</th>
+            <th>Country Name</th>
+            <th>Currency Alpha Code</th>
+            <th>Currency Name</th>
+            <th>Currency Minor Units</th>
+            <th>Activation Date</th>
+            <th>Activated By</th>
+            <th>Deactivation Date</th>
+            <th>Deactivated By</th>
+            <th>Active</th>
+        </tr>
+        <#list isoCodes as isoCode >
+        <tr>
+            <td>
+                <a href="/admin/isoUpdate?code=${isoCode.countryCode()}">
+                    ${isoCode.countryCode()}
+                </a>
+            </td>
+            <td>${isoCode.countryName()}</td>
+            <td>${isoCode.currencyCode()}</td>
+            <td>${isoCode.currencyName()}</td>
+            <td><#if isoCode.currencyMinorUnits()?? >${isoCode.currencyMinorUnits()}</#if></td>
+            <td><#if isoCode.activationDateTime()?? >${isoCode.activationDateTimeAsDate()?datetime}</#if></td>
+            <td><#if isoCode.activatedBy()?? >${isoCode.activatedBy()}</#if></td>
+            <td><#if isoCode.deactivationDateTime()?? >${isoCode.deactivationDateTimeAsDate()?datetime}</#if></td>
+            <td><#if isoCode.deactivatedBy()?? >${isoCode.deactivatedBy()}</#if></td>
+            <td>
+                <label for="${isoCode.countryCode()}"></label>
+                <input type="checkbox" name="activate" id="${isoCode.countryCode()}"
+                       value="${isoCode.countryCode()}" <#if isoCode.active() > checked
+            </#if> >
+            </td>
+        </tr>
+    </#list>
+    <#if hasRecords >
+    <tr>
+        <td colspan="10" style="text-align:center;">
+            <a href="/admin/isoData?${first}">first</a>
+            <img src="../img/spacer.gif" width="5px">
+            <#if hasPrev ><a href="/admin/isoData?${prev}">prev</a>
+            <img src="../img/spacer.gif" width="5px"></#if>
+        <#if hasNext ><a href="/admin/isoData?${next}">next</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <a href="/admin/isoData?${last}">last</a>
+    </td>
+    </tr>
+</#if>
+</table>
+</form>
+</body>
+</html>

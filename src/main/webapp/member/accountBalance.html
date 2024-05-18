@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Balance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/member_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="memberTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropMember()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="memberDropdown">
+            <div w3-include-html="memberDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Account Balance</h1>
+<script>includeHTML();</script>
+<p>You can do the following:</p>
+<ul>
+    <li>View account balances</li>
+    <li><a href="/member/accountTxn">View account transactions</a></li>
+    <li>Deposit virtual funds</li>
+    <li><a href="/member/transferFunds">Transfer funds</a></li>
+</ul>
+<label for="accountCurrency"></label>
+<select name="accountCurrency" id="accountCurrency" onchange="refreshAccount()">
+    <option value="#"
+    <#if selectedCcy == "" > selected </#if> >All currencies</option>
+<#list activeCurrencies as curr >
+<option value="${curr.getCurrencyCode()}"
+<#if selectedCcy == curr.getCurrencyCode() > selected
+</#if> >
+${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+</option>
+</#list>
+</select>
+<table>
+    <tr>
+        <th>Currency</th>
+        <th>Investment Balance</th>
+        <th>Available Balance</th>
+    </tr>
+    <#list balances as balance >
+    <tr>
+        <td><a href="/member/accountTxn?ccy=${balance.currency()}">${balance.currency()}</a></td>
+        <#if balance.decimalPlacesToDisplay() == 0 >
+        <td>${balance.tradingAmount()?string(",##0")}</td>
+        <td>${balance.nonTradingAmount()?string(",##0")}</td>
+        <#elseif balance.decimalPlacesToDisplay() == 3 >
+        <td>${balance.tradingAmount()?string(",##0.000")}</td>
+        <td>${balance.nonTradingAmount()?string(",##0.000")}</td>
+        <#elseif balance.decimalPlacesToDisplay() == 4 >
+        <td>${balance.tradingAmount()?string(",##0.0000")}</td>
+        <td>${balance.nonTradingAmount()?string(",##0.0000")}</td>
+        <#else>
+        <td>${balance.tradingAmount()?string(",##0.00")}</td>
+        <td>${balance.nonTradingAmount()?string(",##0.00")}</td>
+    </#if>
+    </tr>
+</#list>
+<#if hasRecords >
+<tr>
+    <td colspan="3" style="text-align:center;">
+        <a href="/member/accountBalance?${first}">first</a>
+        <img src="../img/spacer.gif" width="5px">
+        <#if hasPrev ><a href="/member/accountBalance?${prev}">prev</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <#if hasNext ><a href="/member/accountBalance?${next}">next</a>
+    <img src="../img/spacer.gif" width="5px"></#if>
+<a href="/member/accountBalance?${last}">last</a>
+</td>
+</tr>
+</#if>
+</table>
+
+<h5>Deposit Virtual Funds</h5>
+<#if errorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${errorMessage}</p>
+</#if>
+<form method="post" action="/member/depositFunds">
+    <table>
+        <tr>
+            <td><label for="currency">Currency</label></td>
+            <td>
+                <select name="currency" id="currency">
+                    <option value="#">All currencies</option>
+                    <#list activeCurrencies as curr >
+                    <option value="${curr.getCurrencyCode()}"
+                    <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >
+                ${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
+                </option>
+            </#list>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="amount">Amount</label></td>
+            <td><input type="text" name="amount" id="amount"></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="hidden" name="selectedCcy" value="${selectedCcy}">
+                <input type="hidden" name="pageNum" value="${pageNum}">
+                <input type="hidden" name="pageSize" value="${pageSize}">
+                <input type="submit" name="action" value="Deposit">
+            </td>
+            <td></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

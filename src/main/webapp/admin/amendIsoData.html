@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update ISO Country & Currency Codes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/admin_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="adminTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropAdmin()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="adminDropdown">
+            <div w3-include-html="adminDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Update ISO Country &amp; Currency Codes</h1>
+<div w3-include-html="isoSection.html"></div>
+<script>includeHTML();</script>
+<#if errorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${errorMessage}</p>
+</#if>
+<form method="post" action="/admin/updateIsoData">
+    <table>
+        <tr>
+            <td>Country Alpha-2 Code</td>
+            <td>${data.countryCode()}</td>
+        </tr>
+        <tr>
+            <td>
+                <label for="countryName">Country Name</label>
+            </td>
+            <td>
+                <input type="text" name="countryName" id="countryName" value="${data.countryName()}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="currencyCode">Currency Alpha Code</label>
+            </td>
+            <td>
+                <input type="text" name="currencyCode" id="currencyCode" maxlength="3"
+                       value="${data.currencyCode()}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="currencyName">Currency Name</label>
+            </td>
+            <td>
+                <input type="text" name="currencyName" id="currencyName" value="${data.currencyName()}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="currencyMinorUnits">Currency Minor Units</label>
+            </td>
+            <td>
+                <select name="currencyMinorUnits" id="currencyMinorUnits">
+                    <#if data.currencyMinorUnits()?? >
+                    <option value="${data.currencyMinorUnits()}">${data.currencyMinorUnits()}</option>
+                    <#else>
+                    <option value="UNKNOWN">UNKNOWN</option>
+                </#if>
+                <option value="UNKNOWN">UNKNOWN</option>
+                <option value="0">0</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Deactivate?</label>
+            </td>
+            <td>
+                <label for="yesDeactivate"></label>
+                <input type="radio" name="deactivate" id="yesDeactivate"
+                       value="Y" <#if !data.active() > checked
+            </#if> >Yes
+            <label for="noDeactivate"></label>
+            <input type="radio" name="deactivate" id="noDeactivate"
+                   value="N" <#if data.active() > checked
+        </#if> >No
+        </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="hidden" name="hiddenCountryCode" value="${data.countryCode()}">
+                <input type="submit" name="action" value="Update">
+                <button type="button" onclick="window.location='/admin/isoData';">Cancel</button>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

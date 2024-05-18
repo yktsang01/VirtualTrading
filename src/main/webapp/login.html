@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <#if subfolder >
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/common_script.js"></script>
+    <#else>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/common_script.js"></script>
+</#if>
+</head>
+<body>
+<div class="navbar">
+    <#if subfolder >
+    <img src="../img/logo.jpg" alt="Logo">
+    <#else>
+    <img src="img/logo.jpg" alt="Logo">
+</#if>
+<#if referrer == "admin" >
+<a href="/login?from=admin">Admin Login</a>
+<#else>
+<a href="/">Home</a>
+<a href="/register">Member Registration</a>
+<a href="/login?from=member">Member Login</a>
+</#if>
+</div>
+<#if referrer == "admin" >
+<h1>Admin Login</h1>
+<#else>
+<h1>Member Login</h1>
+</#if>
+<#if errorMessage?? >
+<p><b>Errors</b></p>
+<p style="color:red;">${errorMessage}<p>
+</#if>
+<form method="post" action="/login">
+    <table>
+        <tr>
+            <td><label for="email">Email</label></td>
+            <td><input type="email" id="email" name="email"></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label></td>
+            <td><input type="password" id="password" name="password">
+                <input type="checkbox" id="showLoginPassword" onclick="showPassword()">
+                <label for="showLoginPassword">Show Password</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="hidden" name="referrer" value="${referrer}">
+                <input type="submit" name="action" value="Login">
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+</form>
+<p><a href="/resetPassword?from=${referrer}">Reset password</a> if you cannot access your account.</p>
+</body>
+</html>

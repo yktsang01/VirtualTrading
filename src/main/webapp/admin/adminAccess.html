@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Access</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/admin_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="adminTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropAdmin()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="adminDropdown">
+            <div w3-include-html="adminDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Admin Access</h1>
+<script>includeHTML();</script>
+<form method="post" action="/admin/adminAccess">
+    <input type="submit" name="action" value="Revoke">
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>Join Date</th>
+            <th>Admin Request Date</th>
+            <th>Admin Approval Date</th>
+            <th>Admin Approve By</th>
+            <th>Revoke Access</th>
+        </tr>
+        <#list adminAccesses as adminAccess >
+        <tr>
+            <td>${adminAccess.email()}</td>
+            <td>${adminAccess.creationDateTimeAsDate()?datetime}</td>
+            <td>${adminAccess.adminRequestDateTimeAsDate()?datetime}</td>
+            <td>${adminAccess.adminApprovalDateTimeAsDate()?datetime}</td>
+            <td>${adminAccess.adminApproveBy()}</td>
+            <td><#if adminAccess.email() != email >
+                <label for="${adminAccess.email()}"></label>
+                <input type="checkbox" name="revoke" id="${adminAccess.email()}" value="${adminAccess.email()}">
+            </#if></td>
+        </tr>
+    </#list>
+    <#if hasRecords >
+    <tr>
+        <td colspan="6" style="text-align:center;">
+            <a href="/admin/adminAccess?${first}">first</a>
+            <img src="../img/spacer.gif" width="5px">
+            <#if hasPrev ><a href="/admin/adminAccess?${prev}">prev</a>
+            <img src="../img/spacer.gif" width="5px"></#if>
+        <#if hasNext ><a href="/admin/adminAccess?${next}">next</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <a href="/admin/adminAccess?${last}">last</a>
+    </td>
+    </tr>
+</#if>
+</table>
+</form>
+</body>
+</html>

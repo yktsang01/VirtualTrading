@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Requests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/admin_script.js"></script>
+</head>
+<body>
+<div class="navbar">
+    <div w3-include-html="adminTopNav.html"></div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="dropAdmin()">${email}
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="adminDropdown">
+            <div w3-include-html="adminDropdownNav.html"></div>
+        </div>
+    </div>
+</div>
+<h1>Admin Requests</h1>
+<script>includeHTML();</script>
+<form method="post" action="/admin/adminRequests">
+    <input type="submit" name="action" value="Grant">
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>Join Date</th>
+            <th>Admin Request Date</th>
+            <th>Grant Access</th>
+        </tr>
+        <#list adminRequests as adminRequest >
+        <tr>
+            <td>${adminRequest.email()}</td>
+            <td>${adminRequest.creationDateTimeAsDate()?datetime}</td>
+            <td>${adminRequest.adminRequestDateTimeAsDate()?datetime}</td>
+            <td>
+                <label for="${adminRequest.email()}"></label>
+                <input type="checkbox" name="grant" id="${adminRequest.email()}" value="${adminRequest.email()}">
+            </td>
+        </tr>
+    </#list>
+    <#if hasRecords >
+    <tr>
+        <td colspan="4" style="text-align:center;">
+            <a href="/admin/adminRequests?${first}">first</a>
+            <img src="../img/spacer.gif" width="5px">
+            <#if hasPrev ><a href="/admin/adminRequests?${prev}">prev</a>
+            <img src="../img/spacer.gif" width="5px"></#if>
+        <#if hasNext ><a href="/admin/adminRequests?${next}">next</a>
+        <img src="../img/spacer.gif" width="5px"></#if>
+    <a href="/admin/adminRequests?${last}">last</a>
+    </td>
+    </tr>
+</#if>
+</table>
+</form>
+</body>
+</html>
