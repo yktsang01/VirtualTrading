@@ -23,59 +23,62 @@
 <script>includeHTML();</script>
 <label for="osTxnCurrency"></label>
 <select name="osTxnCurrency" id="osTxnCurrency" onchange="refreshOutstandingTxn()">
-    <option value="#"
-    <#if selectedCcy == "" > selected </#if> >All currencies</option>
-<#list activeCurrencies as curr >
-<option value="${curr.getCurrencyCode()}"
-<#if selectedCcy == curr.getCurrencyCode() > selected
-</#if> >
-${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
-</option>
-</#list>
+    <option value="#" <#if selectedCcy == "" > selected </#if> >All currencies</option>
+    <#list activeCurrencies as curr >
+    <option value="${curr.getCurrencyCode()}" <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >${curr.getCurrencyCode()} - ${curr.getCurrencyName()}</option>
+    </#list>
 </select>
-<table>
-    <tr>
-        <th>Symbol</th>
-        <th>Name</th>
-        <th>O/S Quantity</th>
-        <th>Currency</th>
-        <th>Current Price</th>
-        <th>Current Amount</th>
-        <th>&nbsp;</th>
-    </tr>
+<div class="table" style="width:1330px;">
+    <div class="table-row">
+        <div class="table-cell-header" style="width:100px;">Symbol</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:200px;">Name</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:100px;">O/S Quantity</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:100px;">Currency</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:120px;">Current Price</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:150px;">Current Amount</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-pad"></div>
+    </div>
     <#list osTransactions as osTxn >
-    <tr>
-        <td>${osTxn.getTradingSymbol()}</td>
-        <td>${osTxn.getSymbolName()}</td>
-        <td>${osTxn.getOutstandingQuantity()}</td>
-        <td>${osTxn.getCurrency()}</td>
-        <td>${osTxn.getCurrentPrice()?string(",##0.0000")}</td>
-        <td>${osTxn.getCurrentAmount()?string(",##0.0000")}</td>
-        <td>
-            <button type="button"
-                    onclick="window.location='/member/buy?s=${osTxn.getEncodedSymbol()}';">
+    <div class="table-row">
+        <div class="table-cell" style="width:100px;">${osTxn.getTradingSymbol()}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell" style="width:200px;">${osTxn.getSymbolName()}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:100px;">${osTxn.getOutstandingQuantity()}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell" style="width:100px;">${osTxn.getCurrency()}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:120px;">${osTxn.getCurrentPrice()?string(",##0.0000")}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:150px;">${osTxn.getCurrentAmount()?string(",##0.0000")}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell" style="width:500px;">
+            <button type="button" onclick="window.location='/member/buy?s=${osTxn.getEncodedSymbol()}';">
                 Buy
             </button>
-            <button type="button"
-                    onclick="window.location='/member/sell?s=${osTxn.getEncodedSymbol()}';">
+            <button type="button" onclick="window.location='/member/sell?s=${osTxn.getEncodedSymbol()}';">
                 Sell
             </button>
-        </td>
-    </tr>
-</#list>
-<#if hasRecords >
-<tr>
-    <td colspan="7" style="text-align:center;">
-        <a href="/member/outstandingTxn?${first}">first</a>
-        <img src="../img/spacer.gif" width="5px">
-        <#if hasPrev ><a href="/member/outstandingTxn?${prev}">prev</a>
-        <img src="../img/spacer.gif" width="5px"></#if>
-    <#if hasNext ><a href="/member/outstandingTxn?${next}">next</a>
-    <img src="../img/spacer.gif" width="5px"></#if>
-<a href="/member/outstandingTxn?${last}">last</a>
-</td>
-</tr>
-</#if>
-</table>
+        </div>
+    </div>
+    </#list>
+    <div class="table-row">
+        <#if hasRecords >
+        <div class="center-text" style="width:1330px;">
+            <a href="/member/outstandingTxn?${first}">first</a>
+            <#if hasPrev ><img src="../img/spacer.gif" style="width:5px;"><a href="/member/outstandingTxn?${prev}">prev</a></#if>
+            <#if hasNext ><img src="../img/spacer.gif" style="width:5px;"><a href="/member/outstandingTxn?${next}">next</a></#if>
+            <img src="../img/spacer.gif" style="width:5px;">
+            <a href="/member/outstandingTxn?${last}">last</a>
+        </div>
+        </#if>
+    </div>
+</div>
 </body>
 </html>

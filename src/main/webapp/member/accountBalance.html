@@ -21,7 +21,7 @@
 </div>
 <h1>Account Balance</h1>
 <script>includeHTML();</script>
-<p>You can do the following:</p>
+<div>You can do the following:</div>
 <ul>
     <li>View account balances</li>
     <li><a href="/member/accountTxn">View account transactions</a></li>
@@ -30,90 +30,97 @@
 </ul>
 <label for="accountCurrency"></label>
 <select name="accountCurrency" id="accountCurrency" onchange="refreshAccount()">
-    <option value="#"
-    <#if selectedCcy == "" > selected </#if> >All currencies</option>
-<#list activeCurrencies as curr >
-<option value="${curr.getCurrencyCode()}"
-<#if selectedCcy == curr.getCurrencyCode() > selected
-</#if> >
-${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
-</option>
-</#list>
+    <option value="#" <#if selectedCcy == "" > selected </#if> >All currencies</option>
+    <#list activeCurrencies as curr >
+    <option value="${curr.getCurrencyCode()}" <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >${curr.getCurrencyCode()} - ${curr.getCurrencyName()}</option>
+    </#list>
 </select>
-<table>
-    <tr>
-        <th>Currency</th>
-        <th>Investment Balance</th>
-        <th>Available Balance</th>
-    </tr>
+<div class="table" style="width:420px;">
+    <div class="table-row">
+        <div class="table-cell-header" style="width:100px;">Currency</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:150px;">Investment Balance</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:150px;">Available Balance</div>
+    </div>
     <#list balances as balance >
-    <tr>
-        <td><a href="/member/accountTxn?ccy=${balance.currency()}">${balance.currency()}</a></td>
-        <#if balance.decimalPlacesToDisplay() == 0 >
-        <td>${balance.tradingAmount()?string(",##0")}</td>
-        <td>${balance.nonTradingAmount()?string(",##0")}</td>
-        <#elseif balance.decimalPlacesToDisplay() == 3 >
-        <td>${balance.tradingAmount()?string(",##0.000")}</td>
-        <td>${balance.nonTradingAmount()?string(",##0.000")}</td>
-        <#elseif balance.decimalPlacesToDisplay() == 4 >
-        <td>${balance.tradingAmount()?string(",##0.0000")}</td>
-        <td>${balance.nonTradingAmount()?string(",##0.0000")}</td>
-        <#else>
-        <td>${balance.tradingAmount()?string(",##0.00")}</td>
-        <td>${balance.nonTradingAmount()?string(",##0.00")}</td>
-    </#if>
-    </tr>
-</#list>
-<#if hasRecords >
-<tr>
-    <td colspan="3" style="text-align:center;">
-        <a href="/member/accountBalance?${first}">first</a>
-        <img src="../img/spacer.gif" width="5px">
-        <#if hasPrev ><a href="/member/accountBalance?${prev}">prev</a>
-        <img src="../img/spacer.gif" width="5px"></#if>
-    <#if hasNext ><a href="/member/accountBalance?${next}">next</a>
-    <img src="../img/spacer.gif" width="5px"></#if>
-<a href="/member/accountBalance?${last}">last</a>
-</td>
-</tr>
-</#if>
-</table>
+    <div class="table-row">
+        <div class="table-cell" style="width:100px;"><a href="/member/accountTxn?ccy=${balance.currency()}">${balance.currency()}</a></div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:150px;">
+            <#if balance.decimalPlacesToDisplay() == 0 >
+            ${balance.tradingAmount()?string(",##0")}
+            <#elseif balance.decimalPlacesToDisplay() == 3 >
+            ${balance.tradingAmount()?string(",##0.000")}
+            <#elseif balance.decimalPlacesToDisplay() == 4 >
+            ${balance.tradingAmount()?string(",##0.0000")}
+            <#else>
+            ${balance.tradingAmount()?string(",##0.00")}
+            </#if>
+        </div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:150px;">
+            <#if balance.decimalPlacesToDisplay() == 0 >
+            ${balance.nonTradingAmount()?string(",##0")}
+            <#elseif balance.decimalPlacesToDisplay() == 3 >
+            ${balance.nonTradingAmount()?string(",##0.000")}
+            <#elseif balance.decimalPlacesToDisplay() == 4 >
+            ${balance.nonTradingAmount()?string(",##0.0000")}
+            <#else>
+            ${balance.nonTradingAmount()?string(",##0.00")}
+            </#if>
+        </div>
+    </div>
+    </#list>
+    <div class="table-row">
+        <#if hasRecords >
+        <div class="center-text" style="width:420px;">
+            <a href="/member/accountBalance?${first}">first</a>
+            <#if hasPrev ><img src="../img/spacer.gif" style="width:5px;"><a href="/member/accountBalance?${prev}">prev</a></#if>
+            <#if hasNext ><img src="../img/spacer.gif" style="width:5px;"><a href="/member/accountBalance?${next}">next</a></#if>
+            <img src="../img/spacer.gif" style="width:5px;">
+            <a href="/member/accountBalance?${last}">last</a>
+        </div>
+        </#if>
+    </div>
+</div>
 
 <h5>Deposit Virtual Funds</h5>
 <#if errorMessage?? >
-<p><b>Errors</b></p>
-<p style="color:red;">${errorMessage}</p>
+<div class="bold-font">Errors</div>
+<div class="red-text">${errorMessage}</div>
+<div>&nbsp;</div>
 </#if>
 <form method="post" action="/member/depositFunds">
-    <table>
-        <tr>
-            <td><label for="currency">Currency</label></td>
-            <td>
+    <div class="table" style="width:440px;">
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label for="currency">Currency</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <select name="currency" id="currency">
                     <option value="#">All currencies</option>
                     <#list activeCurrencies as curr >
-                    <option value="${curr.getCurrencyCode()}"
-                    <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >
-                ${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
-                </option>
-            </#list>
-            </select>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="amount">Amount</label></td>
-            <td><input type="text" name="amount" id="amount"></td>
-        </tr>
-        <tr>
-            <td>
+                    <option value="${curr.getCurrencyCode()}" <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >${curr.getCurrencyCode()} - ${curr.getCurrencyName()}</option>
+                    </#list>
+                </select>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label for="amount">Amount</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="text" name="amount" id="amount"></div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;">
                 <input type="hidden" name="selectedCcy" value="${selectedCcy}">
                 <input type="hidden" name="pageNum" value="${pageNum}">
                 <input type="hidden" name="pageSize" value="${pageSize}">
                 <input type="submit" name="action" value="Deposit">
-            </td>
-            <td></td>
-        </tr>
-    </table>
+            </div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+        </div>
+    </div>
 </form>
 </body>
 </html>

@@ -32,23 +32,21 @@
 </div>
 <h1>Reset Portfolio</h1>
 <script>includeHTML();</script>
-<p>You have the option of resetting the entire portfolio or only the specific currency. Only active currencies can be
-    reset.</p>
-<p>By resetting your portfolio, the following will happen:</p>
+<div>You have the option of resetting the entire portfolio or only the specific currency. Only active currencies can be reset.</div>
+<div>By resetting your portfolio, the following will happen:</div>
 <ul>
     <li>All trading transactions, under the specific currency if applicable, you have done will be deleted</li>
     <li>All portfolios, under the specific currency if applicable, you have created will be deleted</li>
     <li>All items in the watch list, under the specific currency if applicable, will be deleted</li>
-    <li>All bank accounts (in use or not), under the specific currency if applicable, you have added will be deleted
-    </li>
+    <li>All bank accounts (in use or not), under the specific currency if applicable, you have added will be deleted</li>
     <li>All bank transactions, under the specific currency if applicable, created will be deleted</li>
     <li>All account balances, under the specific currency if applicable, you have deposited funds will be deleted</li>
     <li>All account transactions, under the specific currency if applicable, created will be deleted</li>
 </ul>
 <#if errorMessage?? >
-<p><b>Errors</b></p>
-<p style="color:red;">${errorMessage}
-<p>
+<div class="bold-font">Errors</div>
+<div class=red-text">${errorMessage}</div>
+<div>&nbsp;</div>
 </#if>
 <form id="resetForm">
     <label for="resetCurrency"></label>
@@ -58,10 +56,9 @@
         <option value="${curr.getCurrencyCode()}">
             ${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
         </option>
-    </#list>
+        </#list>
     </select>
     <button type="button" onclick="confirmReset()">Reset</button>
 </form>
-
 </body>
 </html>

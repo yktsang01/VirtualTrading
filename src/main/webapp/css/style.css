@@ -1,3 +1,7 @@
+body {
+    width: 1800px;
+}
+
 .navbar {
   overflow: hidden;
   background-color: #333;
@@ -63,4 +67,69 @@
 
 .show {
   display: block;
+}
+
+div + ul {
+    margin-top: 0px;
+}
+
+.table {
+    table-layout: fixed;
+    display: table;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.table-cell-header {
+    display: table-cell;
+    vertical-align: top;
+    font-weight: bold;
+    text-align: center;
+}
+
+.table-cell-pad {
+    display: table-cell;
+    vertical-align: top;
+    padding-left: 10px;
+}
+
+.pad-all-5 {
+    padding: 5px;
+}
+
+.bold-font {
+    font-weight: bold;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.left-text {
+    text-align: left;
+}
+
+.right-text {
+    text-align: right;
+}
+
+.object-center {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+.red-text {
+    color: red;
+}
+
+.green-text {
+    color: green;
 }

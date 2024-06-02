@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ISO Country & Currency Codes</title>
+    <title>ISO Country &amp; Currency Codes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/admin_script.js"></script>
@@ -22,59 +22,74 @@
 <h1>ISO Country &amp; Currency Codes</h1>
 <div w3-include-html="isoSection.html"></div>
 <script>includeHTML();</script>
-<p><a href="/admin/isoCreation">Create new ISO record</a></p>
+<div>&nbsp;</div>
+<div><a href="/admin/isoCreation">Create new ISO record</a></div>
+<div>&nbsp;</div>
 <form method="post" action="/admin/activateIsoData">
     <input type="submit" name="action" value="Activate">
-    <table>
-        <tr>
-            <th>Country Alpha-2 Code</th>
-            <th>Country Name</th>
-            <th>Currency Alpha Code</th>
-            <th>Currency Name</th>
-            <th>Currency Minor Units</th>
-            <th>Activation Date</th>
-            <th>Activated By</th>
-            <th>Deactivation Date</th>
-            <th>Deactivated By</th>
-            <th>Active</th>
-        </tr>
+    <div>&nbsp;</div>
+    <div class="table" style="width:1630px;">
+        <div class="table-row">
+            <div class="table-cell-header" style="width:100px;">Country Alpha-2 Code</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:200px;">Country Name</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:100px;">Currency Alpha Code</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:200px;">Currency Name</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:100px;">Currency Minor Units</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:170px;">Activation Date</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:200px;">Activated By</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:170px;">Deactivation Date</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:200px;">Deactivated By</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:100px;">Active</div>
+        </div>
         <#list isoCodes as isoCode >
-        <tr>
-            <td>
-                <a href="/admin/isoUpdate?code=${isoCode.countryCode()}">
-                    ${isoCode.countryCode()}
-                </a>
-            </td>
-            <td>${isoCode.countryName()}</td>
-            <td>${isoCode.currencyCode()}</td>
-            <td>${isoCode.currencyName()}</td>
-            <td><#if isoCode.currencyMinorUnits()?? >${isoCode.currencyMinorUnits()}</#if></td>
-            <td><#if isoCode.activationDateTime()?? >${isoCode.activationDateTimeAsDate()?datetime}</#if></td>
-            <td><#if isoCode.activatedBy()?? >${isoCode.activatedBy()}</#if></td>
-            <td><#if isoCode.deactivationDateTime()?? >${isoCode.deactivationDateTimeAsDate()?datetime}</#if></td>
-            <td><#if isoCode.deactivatedBy()?? >${isoCode.deactivatedBy()}</#if></td>
-            <td>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;">
+                <a href="/admin/isoUpdate?code=${isoCode.countryCode()}">${isoCode.countryCode()}</a>
+            </div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:200px;">${isoCode.countryName()}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:100px;">${isoCode.currencyCode()}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:200px;">${isoCode.currencyName()}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell right-text" style="width:100px;"><#if isoCode.currencyMinorUnits()?? >${isoCode.currencyMinorUnits()}</#if></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:170px;"><#if isoCode.activationDateTime()?? >${isoCode.activationDateTimeAsDate()?datetime}</#if></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:200px;"><#if isoCode.activatedBy()?? >${isoCode.activatedBy()}</#if></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:170px;"><#if isoCode.deactivationDateTime()?? >${isoCode.deactivationDateTimeAsDate()?datetime}</#if></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:200px;"><#if isoCode.deactivatedBy()?? >${isoCode.deactivatedBy()}</#if></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:100px;">
                 <label for="${isoCode.countryCode()}"></label>
-                <input type="checkbox" name="activate" id="${isoCode.countryCode()}"
-                       value="${isoCode.countryCode()}" <#if isoCode.active() > checked
-            </#if> >
-            </td>
-        </tr>
-    </#list>
-    <#if hasRecords >
-    <tr>
-        <td colspan="10" style="text-align:center;">
-            <a href="/admin/isoData?${first}">first</a>
-            <img src="../img/spacer.gif" width="5px">
-            <#if hasPrev ><a href="/admin/isoData?${prev}">prev</a>
-            <img src="../img/spacer.gif" width="5px"></#if>
-        <#if hasNext ><a href="/admin/isoData?${next}">next</a>
-        <img src="../img/spacer.gif" width="5px"></#if>
-    <a href="/admin/isoData?${last}">last</a>
-    </td>
-    </tr>
-</#if>
-</table>
+                <input class="object-center" type="checkbox" name="activate" id="${isoCode.countryCode()}" value="${isoCode.countryCode()}" <#if isoCode.active() > checked </#if> >
+            </div>
+        </div>
+        </#list>
+        <div class="table-row">
+            <#if hasRecords >
+            <div class="center-text" style="width:1630px;">
+                <a href="/admin/isoData?${first}">first</a>
+                <#if hasPrev ><img src="../img/spacer.gif" style="width:5px;"><a href="/admin/isoData?${prev}">prev</a></#if>
+                <#if hasNext ><img src="../img/spacer.gif" style="width:5px;"><a href="/admin/isoData?${next}">next</a></#if>
+                <img src="../img/spacer.gif" style="width:5px;">
+                <a href="/admin/isoData?${last}">last</a>
+            </div>
+            </#if>
+        </div>
+    </div>
 </form>
 </body>
 </html>

@@ -24,42 +24,46 @@
 <script>includeHTML();</script>
 
 <#if account.admin() >
-<p>You are also an admin.</p>
+<div>You are also an admin.</div>
 </#if>
 
-<p>You can do the following:</p>
+<div>You can do the following:</div>
 <ul>
     <li>View &amp; update profile</li>
     <li>Reset password</li>
     <#if !account.adminRequested() >
     <li>Request admin access</li>
-</#if>
-<#if !adminAccount >
-<li>Deactivate account</li>
-</#if>
-<#if trader.allowReset() >
-<li><a href="/member/reset">Reset portfolio</a></li>
-</#if>
+    </#if>
+    <#if !adminAccount >
+    <li>Deactivate account</li>
+    </#if>
+    <#if trader.allowReset() >
+    <li><a href="/member/reset">Reset portfolio</a></li>
+    </#if>
 </ul>
 
 <h5>View &amp; Update Profile</h5>
 <#if updateProfileErrorMessage?? >
-<p><b>Errors</b></p>
-<p style="color:red;">${updateProfileErrorMessage}<p>
+<div class="bold-font">Errors</div>
+<div class="red-text">${updateProfileErrorMessage}</div>
+<div>&nbsp;</div>
 </#if>
 <form method="post" action="/member/updateProfile">
-    <table>
-        <tr>
-            <td>Email</td>
-            <td>${trader.email()}</td>
-        </tr>
-        <tr>
-            <td><label for="fullName">Full Name</label></td>
-            <td><input type="text" id="fullName" name="fullName" value="${trader.fullName()}"></td>
-        </tr>
-        <tr>
-            <td><label>Date of Birth</label></td>
-            <td><label for="dateOfBirthMonth"></label>
+    <div class="table" style="width:570px;">
+        <div class="table-row">
+            <div class="table-cell" style="width:230px;">Email</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${trader.email()}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:230px;"><label for="fullName">Full Name</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="text" id="fullName" name="fullName" value="${trader.fullName()}"></div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:230px;"><label>Date of Birth</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><label for="dateOfBirthMonth"></label>
                 <select name="dateOfBirthMonth" id="dateOfBirthMonth">
                     <option value="0">MMMMM</option>
                     <option value="${trader.dateOfBirth().getMonthValue()}" selected>
@@ -96,178 +100,175 @@
                     <option value="${trader.dateOfBirthYearAsString()}" selected>${trader.dateOfBirthYearAsString()}
                     </option>
                     <script>
-                        const d = new Date();
-                        let currentYear = d.getFullYear();
-                        let startYear = currentYear - 100;
-                        for (let i = currentYear; i >= startYear; i--) {
+                        var d = new Date();
+                        var currentYear = d.getFullYear();
+                        var startYear = currentYear - 100;
+                        for (var i = currentYear; i >= startYear; i--) {
                             document.write("<option value='"+i+"'>"+i+"</option>");
                         }
                     </script>
                 </select>
-            </td>
-        </tr>
-        <tr>
-            <td><label>Hide Date of Birth?</label></td>
-            <td>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:230px;"><label>Hide Date of Birth?</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <label for="yesHideDOB"></label>
-                <input type="radio" name="hideDateOfBirth" id="yesHideDOB"
-                       value="Y" <#if trader.hideDateOfBirth() > checked
-            </#if> >Yes
-            <label for="noHideDOB"></label>
-            <input type="radio" name="hideDateOfBirth" id="noHideDOB"
-                   value="N" <#if !trader.hideDateOfBirth() > checked
-        </#if> >No
-        </td>
-        </tr>
-        <tr>
-            <td><label>Risk Tolerance</label></td>
-            <td>
+                <input type="radio" name="hideDateOfBirth" id="yesHideDOB" value="Y" <#if trader.hideDateOfBirth() > checked </#if> >Yes
+                <label for="noHideDOB"></label>
+                <input type="radio" name="hideDateOfBirth" id="noHideDOB" value="N" <#if !trader.hideDateOfBirth() > checked </#if> >No
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:230px;"><label>Risk Tolerance</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <label for="low"></label>
-                <input type="radio" name="riskTolerance" id="low"
-                       value="LOW" <#if trader.riskTolerance().name() == "LOW" > checked
-            </#if> >Low
-            <label for="medium"></label>
-            <input type="radio" name="riskTolerance" id="medium"
-                   value="MEDIUM" <#if trader.riskTolerance().name() == "MEDIUM" > checked
-        </#if> >Medium
-        <label for="high"></label>
-        <input type="radio" name="riskTolerance" id="high"
-               value="HIGH" <#if trader.riskTolerance().name() == "HIGH" > checked
-    </#if> >High
-    </td>
-    </tr>
-    <tr>
-        <td><label>Auto Transfer Funds to Bank?</label></td>
-        <td>
-            <label for="yesAutoTransfer"></label>
-            <input type="radio" name="autoTransferToBank" id="yesAutoTransfer"
-                   value="Y" <#if trader.autoTransferToBank() > checked
-        </#if> >Yes
-        <label for="noAutoTransfer"></label>
-        <input type="radio" name="autoTransferToBank" id="noAutoTransfer"
-               value="N" <#if !trader.autoTransferToBank() > checked
-    </#if> >No
-    </td>
-    </tr>
-    <tr>
-        <td><label>Allow Reset to Trading Portfolio?</label></td>
-        <td>
-            <label for="yesAllowReset"></label>
-            <input type="radio" name="allowReset" id="yesAllowReset"
-                   value="Y" <#if trader.allowReset() > checked
-        </#if> >Yes
-        <label for="noAllowReset"></label>
-        <input type="radio" name="allowReset" id="noAllowReset"
-               value="N" <#if !trader.allowReset() > checked
-    </#if> >No
-    </td>
-    </tr>
-    <tr>
-        <td>
-            <input type="submit" name="action" value="Update">
-        </td>
-        <td>&nbsp;</td>
-    </tr>
-    </table>
+                <input type="radio" name="riskTolerance" id="low" value="LOW" <#if trader.riskTolerance().name() == "LOW" > checked </#if> >Low
+                <label for="medium"></label>
+                <input type="radio" name="riskTolerance" id="medium" value="MEDIUM" <#if trader.riskTolerance().name() == "MEDIUM" > checked </#if> >Medium
+                <label for="high"></label>
+                <input type="radio" name="riskTolerance" id="high" value="HIGH" <#if trader.riskTolerance().name() == "HIGH" > checked </#if> >High
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:230px;"><label>Auto Transfer Funds to Bank?</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
+                <label for="yesAutoTransfer"></label>
+                <input type="radio" name="autoTransferToBank" id="yesAutoTransfer" value="Y" <#if trader.autoTransferToBank() > checked </#if> >Yes
+                <label for="noAutoTransfer"></label>
+                <input type="radio" name="autoTransferToBank" id="noAutoTransfer" value="N" <#if !trader.autoTransferToBank() > checked </#if> >No
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:230px;"><label>Allow Reset to Trading Portfolio?</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
+                <label for="yesAllowReset"></label>
+                <input type="radio" name="allowReset" id="yesAllowReset" value="Y" <#if trader.allowReset() > checked </#if> >Yes
+                <label for="noAllowReset"></label>
+                <input type="radio" name="allowReset" id="noAllowReset" value="N" <#if !trader.allowReset() > checked </#if> >No
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:230px;">
+                <input type="submit" name="action" value="Update">
+            </div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+        </div>
+    </div>
 </form>
 
 <h5>Reset Password</h5>
 <#if updateAccountErrorMessage?? >
-<p><b>Errors</b></p>
-<p style="color:red;">${updateAccountErrorMessage}<p>
+<div class="bold-font">Errors</div>
+<div class="red-text">${updateAccountErrorMessage}</div>
+<div>&nbsp;</div>
 </#if>
 <form method="post" action="/member/updateAccount">
-    <table>
-        <tr>
-            <td>Email</td>
-            <td>${account.email()}</td>
-        </tr>
-        <tr>
-            <td><label for="password1">New Password</label></td>
-            <td><input type="password" id="password1" name="password1">
+    <div class="table" style="width:470px;">
+        <div class="table-row">
+            <div class="table-cell" style="width:130px;">Email</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${account.email()}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:130px;"><label for="password1">New Password</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="password" id="password1" name="password1">
                 <input type="checkbox" id="showPassword1" onclick="showNewPassword()">
                 <label for="showPassword1">Show Password</label>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="password2">Confirm Password</label></td>
-            <td><input type="password" id="password2" name="password2">
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:130px;"><label for="password2">Confirm Password</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="password" id="password2" name="password2">
                 <input type="checkbox" id="showPassword2" onclick="showConfirmPassword()">
                 <label for="showPassword2">Show Password</label>
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:130px;">
                 <input type="submit" name="action" value="Reset">
-            </td>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
+            </div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+        </div>
+    </div>
 </form>
 
 <#if !account.adminRequested() >
 <h5>Request Admin Access</h5>
 <form method="post" action="/member/requestAdmin">
-    <table>
-        <tr>
-            <td>Email</td>
-            <td>${account.email()}</td>
-        </tr>
-        <tr>
-            <td><label>Request Admin Access?</label></td>
-            <td>
+    <div class="table" style="width:510px;">
+        <div class="table-row">
+            <div class="table-cell" style="width:170px;">Email</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${account.email()}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:170px;"><label>Request Admin Access?</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <label for="yesAdmin"></label>
-                <input type="radio" name="admin" id="yesAdmin"
-                       value="Y">Yes
+                <input type="radio" name="admin" id="yesAdmin" value="Y">Yes
                 <label for="noAdmin"></label>
-                <input type="radio" name="admin" id="noAdmin"
-                       value="N" checked>No
-            </td>
-        </tr>
-        <tr>
-            <td>
+                <input type="radio" name="admin" id="noAdmin" value="N" checked>No
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:170px;">
                 <input type="submit" name="action" value="Request">
-            </td>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
+            </div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+        </div>
+    </div>
 </form>
 </#if>
+
 <#if !adminAccount >
 <h5>Deactivate Account</h5>
-<p style="color:red;">You can reset password to reactivate your account.</p>
+<div class="red-text">You can reset password to reactivate your account.</div>
 <#if deactivateAccountErrorMessage?? >
-<p><b>Errors</b></p>
-<p style="color:red;">${deactivateAccountErrorMessage}<p>
+<div class="bold-font">Errors</div>
+<div class="red-text">${deactivateAccountErrorMessage}</div>
+<div>&nbsp;</div>
 </#if>
 <form method="post" action="/member/deactivateProfile">
-    <table>
-        <tr>
-            <td>Email</td>
-            <td>${account.email()}</td>
-        </tr>
-        <tr>
-            <td><label>Deactivate?</label></td>
-            <td>
+    <div class="table" style="width:440px;">
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;">Email</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${account.email()}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label>Deactivate?</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <label for="yesDeactivate"></label>
-                <input type="radio" name="deactivate" id="yesDeactivate"
-                       value="Y">Yes
+                <input type="radio" name="deactivate" id="yesDeactivate" value="Y">Yes
                 <label for="noDeactivate"></label>
-                <input type="radio" name="deactivate" id="noDeactivate"
-                       value="N" checked>No
-            </td>
-        </tr>
-        <tr>
-            <td><label for="deactivationReason">Reason</label></td>
-            <td><input type="text" id="deactivationReason" name="reason"></td>
-        </tr>
-        <tr>
-            <td>
+                <input type="radio" name="deactivate" id="noDeactivate" value="N" checked>No
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label for="deactivationReason">Reason</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="text" id="deactivationReason" name="reason"></div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;">
                 <input type="submit" name="action" value="Deactivate">
-            </td>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
+            </div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+        </div>
+    </div>
 </form>
 </#if>
 </body>

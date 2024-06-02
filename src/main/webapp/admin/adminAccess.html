@@ -23,42 +23,51 @@
 <script>includeHTML();</script>
 <form method="post" action="/admin/adminAccess">
     <input type="submit" name="action" value="Revoke">
-    <table>
-        <tr>
-            <th>Email</th>
-            <th>Join Date</th>
-            <th>Admin Request Date</th>
-            <th>Admin Approval Date</th>
-            <th>Admin Approve By</th>
-            <th>Revoke Access</th>
-        </tr>
+    <div>&nbsp;</div>
+    <div class="table" style="width:1060px;">
+        <div class="table-row">
+            <div class="table-cell-header" style="width:200px;">Email</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:170px;">Join Date</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:170px;">Admin Request Date</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:170px;">Admin Approval Date</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:200px;">Admin Approve By</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:100px;">Revoke Access</div>
+        </div>
         <#list adminAccesses as adminAccess >
-        <tr>
-            <td>${adminAccess.email()}</td>
-            <td>${adminAccess.creationDateTimeAsDate()?datetime}</td>
-            <td>${adminAccess.adminRequestDateTimeAsDate()?datetime}</td>
-            <td>${adminAccess.adminApprovalDateTimeAsDate()?datetime}</td>
-            <td>${adminAccess.adminApproveBy()}</td>
-            <td><#if adminAccess.email() != email >
+        <div class="table-row">
+            <div class="table-cell" style="width:200px;">${adminAccess.email()}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:170px;">${adminAccess.creationDateTimeAsDate()?datetime}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:170px;">${adminAccess.adminRequestDateTimeAsDate()?datetime}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:170px;">${adminAccess.adminApprovalDateTimeAsDate()?datetime}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:200px;">${adminAccess.adminApproveBy()}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:100px;"><#if adminAccess.email() != email >
                 <label for="${adminAccess.email()}"></label>
-                <input type="checkbox" name="revoke" id="${adminAccess.email()}" value="${adminAccess.email()}">
-            </#if></td>
-        </tr>
-    </#list>
-    <#if hasRecords >
-    <tr>
-        <td colspan="6" style="text-align:center;">
-            <a href="/admin/adminAccess?${first}">first</a>
-            <img src="../img/spacer.gif" width="5px">
-            <#if hasPrev ><a href="/admin/adminAccess?${prev}">prev</a>
-            <img src="../img/spacer.gif" width="5px"></#if>
-        <#if hasNext ><a href="/admin/adminAccess?${next}">next</a>
-        <img src="../img/spacer.gif" width="5px"></#if>
-    <a href="/admin/adminAccess?${last}">last</a>
-    </td>
-    </tr>
-</#if>
-</table>
+                <input class="object-center" type="checkbox" name="revoke" id="${adminAccess.email()}" value="${adminAccess.email()}">
+            </#if></div>
+        </div>
+        </#list>
+        <div class="table-row">
+            <#if hasRecords >
+            <div class="center-text" style="width:1060px;">
+                <a href="/admin/adminAccess?${first}">first</a>
+                <#if hasPrev ><img src="../img/spacer.gif" style="width:5px;"><a href="/admin/adminAccess?${prev}">prev</a></#if>
+                <#if hasNext ><img src="../img/spacer.gif" style="width:5px;"><a href="/admin/adminAccess?${next}">next</a></#if>
+                <img src="../img/spacer.gif" style="width:5px;">
+                <a href="/admin/adminAccess?${last}">last</a>
+            </div>
+            </#if>
+        </div>
+    </div>
 </form>
 </body>
 </html>

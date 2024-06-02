@@ -22,84 +22,108 @@
 <h1>Portfolio Details</h1>
 <script>includeHTML();</script>
 <#if portfolioMessage?? >
-<p>${portfolioMessage}
-<p>
-    <#else>
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Currency</th>
-        <th>Invested Amount</th>
-        <th>Current Amount</th>
-        <th>Profit &amp; Loss</th>
-    </tr>
-    <tr>
-        <td>${portfolio.portfolioName()}</td>
-        <td>${portfolio.currency()}</td>
-        <td>${portfolio.investedAmount()?string(",##0.0000")}</td>
-        <td>${portfolio.currentAmount()?string(",##0.0000")}</td>
-        <td>${portfolio.profitLossAmount()?string(",##0.0000")}</td>
-    </tr>
-</table>
-<img src="../img/spacer.gif" height="50px"><br>
+<div>${portfolioMessage}</div>
+<#else>
+<div class="table" style="width:790px;">
+    <div class="table-row">
+        <div class="table-cell-header" style="width:200px;">Name</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:100px;">Currency</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:150px;">Invested Amount</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:150px;">Current Amount</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:150px;">Profit &amp; Loss</div>
+    </div>
+    <div class="table-row">
+        <div class="table-cell" style="width:200px;">${portfolio.portfolioName()}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell" style="width:200px;">${portfolio.currency()}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:200px;">${portfolio.investedAmount()?string(",##0.0000")}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:200px;">${portfolio.currentAmount()?string(",##0.0000")}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:150px;">
+            <#if portfolio.profitLossAmount() &lt; 0 >
+            <div class="red-text">${portfolio.profitLossAmount()?string(",##0.0000")}</div>
+            <#else>
+            <div class="green-text">${portfolio.profitLossAmount()?string(",##0.0000")}</div>
+            </#if>
+        </div>
+    </div>
+</div>
+<img src="../img/spacer.gif" style="height:50px;"><br>
 <form method="post" action="/member/unlinkFromPortfolio">
     <input type="hidden" name="portfolioId" value="${portfolio.portfolioIdAsString()}">
     <input type="hidden" name="pageNum" value="${pageNum}">
     <input type="hidden" name="pageSize" value="${pageSize}">
     <input type="submit" name="action" value="Remove from Portfolio">
-    <table>
-        <tr>
-            <th>Transaction Date</th>
-            <th>Symbol</th>
-            <th>Name</th>
-            <th>Deed</th>
-            <th>Quantity</th>
-            <th>Currency</th>
-            <th>Price</th>
-            <th>Cost</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-        </tr>
+    <div class="table" style="width:1780px;">
+        <div class="table-row">
+            <div class="table-cell-header" style="width:130px;">Transaction Date</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:100px;">Symbol</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:200px;">Name</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:100px;">Deed</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:100px;">Quantity</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:100px;">Currency</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:120px;">Price</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-header" style="width:150px;">Cost</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+        </div>
         <#list tradingTransactions as txn >
-        <tr>
-            <td>${txn.transactionDateAsDate()?date}</td>
-            <td>${txn.tradingSymbol()}</td>
-            <td>${txn.tradingSymbolName()}</td>
-            <td>${txn.tradingDeed().name()}</td>
-            <td>${txn.quantity()}</td>
-            <td>${txn.transactionCurrency()}</td>
-            <td>${txn.transactionPrice()?string(",##0.0000")}</td>
-            <td>${txn.transactionCost()?string(",##0.0000")}</td>
-            <td>
-                <button type="button"
-                        onclick="window.location='/member/buy?s=${txn.encodedSymbol()}';">
+        <div class="table-row">
+            <div class="table-cell" style="width:130px;">${txn.transactionDateAsDate()?date}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:100px;">${txn.tradingSymbol()}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:200px;">${txn.tradingSymbolName()}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:100px;">${txn.tradingDeed().name()}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell right-text" style="width:100px;">${txn.quantity()}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:100px;">${txn.transactionCurrency()}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell right-text" style="width:120px;">${txn.transactionPrice()?string(",##0.0000")}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell right-text" style="width:150px;">${txn.transactionCost()?string(",##0.0000")}</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:600px;">
+                <button type="button" onclick="window.location='/member/buy?s=${txn.encodedSymbol()}';">
                     Buy
                 </button>
-                <button type="button"
-                        onclick="window.location='/member/sell?s=${txn.encodedSymbol()}';">
+                <button type="button" onclick="window.location='/member/sell?s=${txn.encodedSymbol()}';">
                     Sell
                 </button>
-            </td>
-            <td>
-                <input type="checkbox" name="unlink" id="${txn.tradingTransactionIdAsString()}"
-                       value="${txn.tradingTransactionIdAsString()}">
-            </td>
-        </tr>
-    </#list>
-    <#if hasRecords >
-    <tr>
-        <td colspan="10" style="text-align:center;">
-            <a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${first}">first</a>
-            <img src="../img/spacer.gif" width="5px">
-            <#if hasPrev ><a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${prev}">prev</a>
-            <img src="../img/spacer.gif" width="5px"></#if>
-        <#if hasNext ><a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${next}">next</a>
-        <img src="../img/spacer.gif" width="5px"></#if>
-    <a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${last}">last</a>
-    </td>
-    </tr>
-</#if>
-</table>
+            </div>
+            <div class="table-cell" style="width:100px;">
+                <input class="object-center" type="checkbox" name="unlink" id="${txn.tradingTransactionIdAsString()}" value="${txn.tradingTransactionIdAsString()}">
+            </div>
+        </div>
+        </#list>
+        <div class="table-row">
+            <#if hasRecords >
+            <div class="center-text" style="width:1780px;">
+                <a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${first}">first</a>
+                <#if hasPrev ><img src="../img/spacer.gif" style="width:5px;"><a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${prev}">prev</a></#if>
+                <#if hasNext ><img src="../img/spacer.gif" style="width:5px;"><a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${next}">next</a></#if>
+                <img src="../img/spacer.gif" style="width:5px;">
+                <a href="/member/portfolioDetails?id=${portfolio.portfolioIdAsString()}&${last}">last</a>
+            </div>
+            </#if>
+        </div>
+    </div>
 </form>
 </#if>
 </body>

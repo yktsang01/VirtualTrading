@@ -23,42 +23,39 @@
 <script>includeHTML();</script>
 <label for="bankTxnCurrency"></label>
 <select name="bankTxnCurrency" id="bankTxnCurrency" onchange="refreshBankTxn()">
-    <option value="#"
-    <#if selectedCcy == "" > selected </#if> >All currencies</option>
-<#list activeCurrencies as curr >
-<option value="${curr.getCurrencyCode()}"
-<#if selectedCcy == curr.getCurrencyCode() > selected
-</#if> >
-${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
-</option>
-</#list>
+    <option value="#" <#if selectedCcy == "" > selected </#if> >All currencies</option>
+    <#list activeCurrencies as curr >
+    <option value="${curr.getCurrencyCode()}" <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >${curr.getCurrencyCode()} - ${curr.getCurrencyName()}</option>
+    </#list>
 </select>
-<table>
-    <tr>
-        <th>Transaction Datetime</th>
-        <th>Currency</th>
-        <th>Description</th>
-    </tr>
+<div class="table" style="width:840px;">
+    <div class="table-row">
+        <div class="table-cell-header" style="width:170px;">Transaction Datetime</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:100px;">Currency</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:550px;">Description</div>
+    </div>
     <#list bankAccountTransactions as txn >
-    <tr>
-        <td>${txn.transactionDateTimeAsDate()?datetime}</td>
-        <td>${txn.currency()}</td>
-        <td>${txn.transactionDescription()}</td>
-    </tr>
-</#list>
-<#if hasRecords >
-<tr>
-    <td colspan="3" style="text-align:center;">
-        <a href="/member/bankTxn?${first}">first</a>
-        <img src="../img/spacer.gif" width="5px">
-        <#if hasPrev ><a href="/member/bankTxn?${prev}">prev</a>
-        <img src="../img/spacer.gif" width="5px"></#if>
-    <#if hasNext ><a href="/member/bankTxn?${next}">next</a>
-    <img src="../img/spacer.gif" width="5px"></#if>
-<a href="/member/bankTxn?${last}">last</a>
-</td>
-</tr>
-</#if>
-</table>
+    <div class="table-row">
+        <div class="table-cell" style="width:170px;">${txn.transactionDateTimeAsDate()?datetime}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell" style="width:100px;">${txn.currency()}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell" style="width:550px;">${txn.transactionDescription()}</div>
+    </div>
+    </#list>
+    <div class="table-row">
+        <#if hasRecords >
+        <div class="center-text" style="width:840px;">
+            <a href="/member/bankTxn?${first}">first</a>
+            <#if hasPrev ><img src="../img/spacer.gif" style="width:5px;"><a href="/member/bankTxn?${prev}">prev</a></#if>
+            <#if hasNext ><img src="../img/spacer.gif" style="width:5px;"><a href="/member/bankTxn?${next}">next</a></#if>
+            <img src="../img/spacer.gif" style="width:5px;">
+            <a href="/member/bankTxn?${last}">last</a>
+        </div>
+        </#if>
+    </div>
+</div>
 </body>
 </html>

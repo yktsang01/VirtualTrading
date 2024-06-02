@@ -9,14 +9,14 @@
     <#else>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/common_script.js"></script>
-</#if>
+    </#if>
 </head>
 <body>
 <div class="navbar">
-    <#if subfolder >
-    <img src="../img/logo.jpg" alt="Logo">
-    <#else>
-    <img src="img/logo.jpg" alt="Logo">
+<#if subfolder >
+<img src="../img/logo.jpg" alt="Logo">
+<#else>
+<img src="img/logo.jpg" alt="Logo">
 </#if>
 <#if referrer == "admin" >
 <a href="/login?from=admin">Admin Login</a>
@@ -32,31 +32,36 @@
 <h1>Member Login</h1>
 </#if>
 <#if errorMessage?? >
-<p><b>Errors</b></p>
-<p style="color:red;">${errorMessage}<p>
+<div class="bold-font">Errors</div>
+<div class="red-text">${errorMessage}</div>
+<div>&nbsp;</div>
 </#if>
 <form method="post" action="/login">
-    <table>
-        <tr>
-            <td><label for="email">Email</label></td>
-            <td><input type="email" id="email" name="email"></td>
-        </tr>
-        <tr>
-            <td><label for="password">Password</label></td>
-            <td><input type="password" id="password" name="password">
+    <div class="table" style="width:440px;">
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label for="email">Email</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="email" id="email" name="email"></div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label for="password">Password</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="password" id="password" name="password">
                 <input type="checkbox" id="showLoginPassword" onclick="showPassword()">
                 <label for="showLoginPassword">Show Password</label>
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;">
                 <input type="hidden" name="referrer" value="${referrer}">
                 <input type="submit" name="action" value="Login">
-            </td>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
+            </div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+        </div>
+    </div>
 </form>
-<p><a href="/resetPassword?from=${referrer}">Reset password</a> if you cannot access your account.</p>
+<div>&nbsp;</div>
+<div><a href="/resetPassword?from=${referrer}">Reset password</a> if you cannot access your account.</div>
 </body>
 </html>

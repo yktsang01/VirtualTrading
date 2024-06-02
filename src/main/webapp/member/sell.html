@@ -47,86 +47,88 @@
 <h1>Sell</h1>
 <script>includeHTML();</script>
 <#if invalidStock >
-<p>Invalid stock. Go back to <a href="/member/outstandingTxn">outstanding transactions</a> to choose again.
-<p>
-    <#elseif noOutstandingShares?? >
-<p>${noOutstandingShares}
-<p>
-    <#else>
-    <#if errorMessage?? >
-<p><b>Errors</b></p>
-<p style="color:red;">${errorMessage}
-<p>
+<div>Invalid stock. Go back to <a href="/member/outstandingTxn">outstanding transactions</a> to choose again.</div>
+<#elseif noOutstandingShares?? >
+<div>${noOutstandingShares}</div>
+<#else>
+<#if errorMessage?? >
+<div class="bold-font">Errors</div>
+<div class="red-text">${errorMessage}</div>
+<div>&nbsp;</div>
 </#if>
 <form id="sellForm">
-    <table>
-        <tr>
-            <td>Symbol</td>
-            <td>${stock.symbol()}</td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>${stock.name()}</td>
-        </tr>
-        <tr>
-            <td>Date</td>
-            <td>${today?date}</td>
-        </tr>
-        <tr>
-            <td>Deed</td>
-            <td>SELL</td>
-        </tr>
-        <tr>
-            <td><label for="quantity">Quantity</label></td>
-            <td><input type="text" name="quantity" id="quantity"
-                <#if inputtedQuantity?? > value="${inputtedQuantity}"
-            </#if> > of possible ${outstandingQuantity}</td>
-        </tr>
-        <tr>
-            <td>Currency</td>
-            <td>${stock.currency()}</td>
-        </tr>
-        <tr>
-        <tr>
-            <td>Price</td>
-            <td>${stock.price()?string(",##0.0000")}</td>
-        </tr>
-        <tr>
-            <td>Estimated Cost</td>
-            <td>
-                <span id="estimatedCost"><#if estimatedCost?? > ${estimatedCost?string(",##0.0000")} <#else> 0.0000 </#if></span>
+    <div class="table" style="width:460px;">
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Symbol</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${stock.symbol()}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Name</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${stock.name()}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Date</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${today?date}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Deed</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">SELL</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;"><label for="quantity">Quantity</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="text" name="quantity" id="quantity" <#if inputtedQuantity?? > value="${inputtedQuantity}" </#if> > of possible ${outstandingQuantity}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Currency</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${stock.currency()}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Price</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${stock.price()?string(",##0.0000")}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Estimated Cost</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
+                <div style="display:inline;" id="estimatedCost"><#if estimatedCost?? > ${estimatedCost?string(",##0.0000")} <#else> 0.0000 </#if></div>
                 <input type="submit" name="action" value="Calculate Cost" onclick="calculateCost()">
-            </td>
-        </tr>
-        <tr>
-            <td><label>Auto Transfer Funds to Bank?</label></td>
-            <td>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;"><label>Auto Transfer Funds to Bank?</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <label for="yesAutoTransfer"></label>
-                <input type="radio" name="autoTransferToBank" id="yesAutoTransfer"
-                       value="Y" <#if trader.autoTransferToBank() > checked
-            </#if> >Yes
-            <label for="noAutoTransfer"></label>
-            <input type="radio" name="autoTransferToBank" id="noAutoTransfer"
-                   value="N" <#if !trader.autoTransferToBank() > checked
-        </#if> >No
-        </td>
-        </tr>
-        <tr>
-            <td><label for="bankAcctId">Auto Transfer Funds to Bank Account</label></td>
-            <td>
+                <input type="radio" name="autoTransferToBank" id="yesAutoTransfer" value="Y" <#if trader.autoTransferToBank() > checked </#if> >Yes
+                <label for="noAutoTransfer"></label>
+                <input type="radio" name="autoTransferToBank" id="noAutoTransfer" value="N" <#if !trader.autoTransferToBank() > checked</#if> >No
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;"><label for="bankAcctId">Auto Transfer Funds to Bank Account</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <select name="bankAcctId" id="bankAcctId">
                     <option value="#">All bank accounts</option>
                     <#list bankAccounts as bankAccount >
                     <option value="${bankAccount.bankAccountIdAsString()}">${bankAccount.currency()}
                         ${bankAccount.bankName()} ${bankAccount.bankAccountNumber()}
                     </option>
-                </#list>
+                    </#list>
                 </select>
-            </td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <input type="hidden" name="symbol" value="${stock.symbol()}">
                 <input type="hidden" name="name" value="${stock.name()}">
                 <input type="hidden" name="currency" value="${stock.currency()}">
@@ -134,9 +136,9 @@
                 <input type="hidden" name="action" value="Sell">
                 <button type="button" onclick="confirmSell()">Sell</button>
                 <button type="button" onclick="window.location='/member/outstandingTxn';">Cancel</button>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </div>
 </form>
 </#if>
 </body>

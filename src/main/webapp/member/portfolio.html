@@ -22,84 +22,91 @@
 <h1>Portfolio Summary</h1>
 <script>includeHTML();</script>
 <#if errorMessage?? >
-<p><b>Errors</b></p>
-<p style="color:red;">${errorMessage}
-<p>
+<div class="bold-font">Errors</div>
+<div class="red-text">${errorMessage}</div>
+<div>&nbsp;</div>
 </#if>
 <form method="post" action="/member/createPortfolio">
-    <table>
-        <tr>
-            <td><label for="portName">Name</label></td>
-            <td><input type="text" name="portName" id="portName"></td>
-        </tr>
-        <tr>
-            <td><label for="portCcy">Currency</label></td>
-            <td>
+    <div class="table" style="width:440px;">
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label for="portName">Name</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="text" name="portName" id="portName"></div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label for="portCcy">Currency</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <select name="portCcy" id="portCcy">
                     <option value="#">Currencies</option>
                     <#list activeCurrencies as curr >
-                    <option value="${curr.getCurrencyCode()}"
-                    <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >
-                ${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
-                </option>
-            </#list>
-            </select>
-            </td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>
+                    <option value="${curr.getCurrencyCode()}" <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >${curr.getCurrencyCode()} - ${curr.getCurrencyName()}</option>
+                    </#list>
+                </select>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <input type="hidden" name="selectedCcy" value="${selectedCcy}">
                 <input type="hidden" name="pageNum" value="${pageNum}">
                 <input type="hidden" name="pageSize" value="${pageSize}">
                 <input type="submit" name="action" value="Create">
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </div>
 </form>
-<img src="../img/spacer.gif" height="50px"><br>
+<img src="../img/spacer.gif" style="height:50px;"><br>
 <label for="portfolioCurrency"></label>
 <select name="portfolioCurrency" id="portfolioCurrency" onchange="refreshPortfolio()">
-    <option value="#"
-    <#if selectedCcy == "" > selected </#if> >All currencies</option>
-<#list activeCurrencies as curr >
-<option value="${curr.getCurrencyCode()}"
-<#if selectedCcy == curr.getCurrencyCode() > selected
-</#if> >
-${curr.getCurrencyCode()} - ${curr.getCurrencyName()}
-</option>
-</#list>
+    <option value="#" <#if selectedCcy == "" > selected </#if> >All currencies</option>
+    <#list activeCurrencies as curr >
+    <option value="${curr.getCurrencyCode()}" <#if selectedCcy == curr.getCurrencyCode() > selected </#if> >${curr.getCurrencyCode()} - ${curr.getCurrencyName()}</option>
+    </#list>
 </select>
-<table>
-    <tr>
-        <th>Portfolio Name</th>
-        <th>Currency</th>
-        <th>Invested Amount</th>
-        <th>Current Amount</th>
-        <th>Profit &amp; Loss</th>
-    </tr>
+<div class="table" style="width:790px;">
+    <div class="table-row">
+        <div class="table-cell-header" style="width:200px;">Portfolio Name</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:100px;">Currency</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:150px;">Invested Amount</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:150px;">Current Amount</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell-header" style="width:150px;">Profit &amp; Loss</div>
+    </div>
     <#list portfolios as port >
-    <tr>
-        <td><a href="/member/portfolioDetails?id=${port.portfolioIdAsString()}">${port.portfolioName()}</a></td>
-        <td>${port.currency()}</td>
-        <td>${port.investedAmount()?string(",##0.0000")}</td>
-        <td>${port.currentAmount()?string(",##0.0000")}</td>
-        <td>${port.profitLossAmount()?string(",##0.0000")}</td>
-    </tr>
-</#list>
-<#if hasRecords >
-<tr>
-    <td colspan="5" style="text-align:center;">
-        <a href="/member/portfolio?${first}">first</a>
-        <img src="../img/spacer.gif" width="5px">
-        <#if hasPrev ><a href="/member/portfolio?${prev}">prev</a>
-        <img src="../img/spacer.gif" width="5px"></#if>
-    <#if hasNext ><a href="/member/portfolio?${next}">next</a>
-    <img src="../img/spacer.gif" width="5px"></#if>
-<a href="/member/portfolio?${last}">last</a>
-</td>
-</tr>
-</#if>
-</table>
+    <div class="table-row">
+        <div class="table-cell" style="width:200px;"><a href="/member/portfolioDetails?id=${port.portfolioIdAsString()}">${port.portfolioName()}</a></div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell" style="width:100px;">${port.currency()}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:150px;">${port.investedAmount()?string(",##0.0000")}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:150px;">${port.currentAmount()?string(",##0.0000")}</div>
+        <div class="table-cell-pad"></div>
+        <div class="table-cell right-text" style="width:150px;">
+            <#if port.profitLossAmount() &lt; 0 >
+            <div class="red-text">${port.profitLossAmount()?string(",##0.0000")}</div>
+            <#else>
+            <div class="green-text">${port.profitLossAmount()?string(",##0.0000")}</div>
+            </#if>
+        </div>
+    </div>
+    </#list>
+    <div class="table-row">
+        <#if hasRecords >
+        <div class="center-text" style="width:790px;">
+            <a href="/member/portfolio?${first}">first</a>
+            <#if hasPrev ><img src="../img/spacer.gif" style="width:5px;"><a href="/member/portfolio?${prev}">prev</a></#if>
+            <#if hasNext ><img src="../img/spacer.gif" style="width:5px;"><a href="/member/portfolio?${next}">next</a></#if>
+            <img src="../img/spacer.gif" style="width:5px;">
+            <a href="/member/portfolio?${last}">last</a>
+        </div>
+        </#if>
+    </div>
+</div>
 </body>
 </html>

@@ -47,61 +47,65 @@
 <h1>Buy</h1>
 <script>includeHTML();</script>
 <#if invalidStock >
-<p>Invalid stock. Go back to <a href="/member/dashboard">dashboard</a> to search again.
-<p>
-    <#elseif missingBalance >
-<p>No appropriate account balance. Go to <a href="/member/accountBalance">account balance</a> to deposit funds.
-<p>
-    <#else>
-<p>You have ${balance.currency()} ${balance.nonTradingAmount()?string(",##0.0000")} available.</p>
+<div>Invalid stock. Go back to <a href="/member/dashboard">dashboard</a> to search again.</div>
+<#elseif missingBalance >
+<div>No appropriate account balance. Go to <a href="/member/accountBalance">account balance</a> to deposit funds.</div>
+<#else>
+<div>You have ${balance.currency()} ${balance.nonTradingAmount()?string(",##0.0000")} available.</div>
 <#if errorMessage?? >
-<p><b>Errors</b></p>
-<p style="color:red;">${errorMessage}
-<p>
+<div class="bold-font">Errors</div>
+<div class="red-text">${errorMessage}</div>
+<div>&nbsp;</div>
 </#if>
 <form id="buyForm">
-    <table>
-        <tr>
-            <td>Symbol</td>
-            <td>${stock.symbol()}</td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>${stock.name()}</td>
-        </tr>
-        <tr>
-            <td>Date</td>
-            <td>${today?date}</td>
-        </tr>
-        <tr>
-            <td>Deed</td>
-            <td>BUY</td>
-        </tr>
-        <tr>
-            <td><label for="quantity">Quantity</label></td>
-            <td><input type="text" name="quantity" id="quantity"
-                <#if inputtedQuantity?? > value="${inputtedQuantity}"
-            </#if> ></td>
-        </tr>
-        <tr>
-            <td>Currency</td>
-            <td>${stock.currency()}</td>
-        </tr>
-        <tr>
-        <tr>
-            <td>Price</td>
-            <td>${stock.price()?string(",##0.0000")}</td>
-        </tr>
-        <tr>
-            <td>Estimated Cost</td>
-            <td>
-                <span id="estimatedCost"><#if estimatedCost?? > ${estimatedCost?string(",##0.0000")} <#else> 0.0000 </#if></span>
+    <div class="table" style="width:460px;">
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Symbol</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${stock.symbol()}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Name</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${stock.name()}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Date</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${today?date}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Deed</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">BUY</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;"><label for="quantity">Quantity</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="text" name="quantity" id="quantity" <#if inputtedQuantity?? > value="${inputtedQuantity}" </#if> ></div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Currency</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${stock.currency()}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Price</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">${stock.price()?string(",##0.0000")}</div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:120px;">Estimated Cost</div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
+                <div style="display:inline;" id="estimatedCost"><#if estimatedCost?? > ${estimatedCost?string(",##0.0000")} <#else> 0.0000 </#if></div>
                 <input type="submit" name="action" value="Calculate Cost" onclick="calculateCost()">
-            </td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <input type="hidden" name="symbol" value="${stock.symbol()}">
                 <input type="hidden" name="name" value="${stock.name()}">
                 <input type="hidden" name="currency" value="${stock.currency()}">
@@ -109,9 +113,9 @@
                 <input type="hidden" name="action" value="Buy">
                 <button type="button" onclick="confirmBuy()">Buy</button>
                 <button type="button" onclick="window.location='/member/dashboard';">Cancel</button>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </div>
 </form>
 </#if>
 </body>

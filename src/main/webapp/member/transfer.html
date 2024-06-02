@@ -22,64 +22,60 @@
 <h1>Transfer Funds</h1>
 <script>includeHTML();</script>
 <#if errorMessage?? >
-<p><b>Errors</b></p>
-<p style="color:red;">${errorMessage}
-<p>
+<div class="bold-font">Errors</div>
+<div class="red-text">${errorMessage}</div>
+<div>&nbsp;</div>
 </#if>
 <form method="post" action="/member/transferFunds">
-    <table>
-        <tr>
-            <td><label for="accountCcy">From</label></td>
-            <td>
+    <div class="table" style="width:440px;">
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label for="accountCcy">From</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
                 <select name="accountCcy" id="accountCcy" onchange="refreshTransfer()">
                     <option value="#">All available accounts</option>
                     <#list balances as balance >
                     <#if balance.decimalPlacesToDisplay() == 0 >
-                    <option value="${balance.currency()}"
-                    <#if selectedCcy == balance.currency() > selected </#if> >${balance.currency()} -
-                ${balance.nonTradingAmount()?string(",##0")}</option>
-                <#elseif balance.decimalPlacesToDisplay() == 3 >
-                <option value="${balance.currency()}"
-                <#if selectedCcy == balance.currency() > selected
-            </#if> >${balance.currency()} - ${balance.nonTradingAmount()?string(",##0.000")}</option>
-            <#elseif balance.decimalPlacesToDisplay() == 4 >
-            <option value="${balance.currency()}"
-            <#if selectedCcy == balance.currency() > selected
-        </#if> >${balance.currency()} - ${balance.nonTradingAmount()?string(",##0.0000")}</option>
-        <#else>
-        <option value="${balance.currency()}"
-        <#if selectedCcy == balance.currency() > selected
-    </#if> >${balance.currency()} - ${balance.nonTradingAmount()?string(",##0.00")}</option>
-</#if>
-</#list>
-</select>
-</td>
-</tr>
-<tr>
-    <td><label for="bankAcctId">To</label></td>
-    <td>
-        <select name="bankAcctId" id="bankAcctId">
-            <option value="#">All available bank accounts</option>
-            <#list bankAccounts as bankAccount >
-            <option value="${bankAccount.bankAccountIdAsString()}">${bankAccount.currency()} ${bankAccount.bankName()}
-                ${bankAccount.bankAccountNumber()}
-            </option>
-        </#list>
-        </select>
-    </td>
-</tr>
-<tr>
-    <td><label for="amount">Amount</label></td>
-    <td><input type="text" name="amount" id="amount"></td>
-</tr>
-<tr>
-    <td>&nbsp;</td>
-    <td>
-        <input type="hidden" name="selectedCcy" value="${selectedCcy}">
-        <input type="submit" name="action" value="Transfer">
-    </td>
-</tr>
-</table>
+                    <option value="${balance.currency()}" <#if selectedCcy == balance.currency() > selected </#if> >${balance.currency()} - ${balance.nonTradingAmount()?string(",##0")}</option>
+                    <#elseif balance.decimalPlacesToDisplay() == 3 >
+                    <option value="${balance.currency()}" <#if selectedCcy == balance.currency() > selected </#if> >${balance.currency()} - ${balance.nonTradingAmount()?string(",##0.000")}</option>
+                    <#elseif balance.decimalPlacesToDisplay() == 4 >
+                    <option value="${balance.currency()}" <#if selectedCcy == balance.currency() > selected </#if> >${balance.currency()} - ${balance.nonTradingAmount()?string(",##0.0000")}</option>
+                    <#else>
+                    <option value="${balance.currency()}" <#if selectedCcy == balance.currency() > selected </#if> >${balance.currency()} - ${balance.nonTradingAmount()?string(",##0.00")}</option>
+                    </#if>
+                    </#list>
+                </select>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label for="bankAcctId">To</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
+                <select name="bankAcctId" id="bankAcctId">
+                    <option value="#">All available bank accounts</option>
+                    <#list bankAccounts as bankAccount >
+                    <option value="${bankAccount.bankAccountIdAsString()}">${bankAccount.currency()} ${bankAccount.bankName()}
+                        ${bankAccount.bankAccountNumber()}
+                    </option>
+                    </#list>
+                </select>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell" style="width:100px;"><label for="amount">Amount</label></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;"><input type="text" name="amount" id="amount"></div>
+        </div>
+        <div class="table-row">
+            <div class="table-cell-pad"></div>
+            <div class="table-cell-pad"></div>
+            <div class="table-cell" style="width:330px;">
+                <input type="hidden" name="selectedCcy" value="${selectedCcy}">
+                <input type="submit" name="action" value="Transfer">
+            </div>
+        </div>
+    </div>
 </form>
 </body>
 </html>

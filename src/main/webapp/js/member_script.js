@@ -41,7 +41,7 @@ function includeHTML() {
 function refreshDashboard() {
   var currencies = document.getElementById("dashboardCurrency");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/dashboard";
   } else {
     window.location.href = "/member/dashboard?ccy="+ccyCode;
@@ -51,7 +51,7 @@ function refreshDashboard() {
 function refreshIndex() {
   var currencies = document.getElementById("indexCurrency");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/indices";
   } else {
     window.location.href = "/member/indices?ccy="+ccyCode;
@@ -61,7 +61,7 @@ function refreshIndex() {
 function refreshEquity() {
   var currencies = document.getElementById("equityCurrency");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/equities";
   } else {
     window.location.href = "/member/equities?ccy="+ccyCode;
@@ -71,7 +71,7 @@ function refreshEquity() {
 function refreshAccount() {
   var currencies = document.getElementById("accountCurrency");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/accountBalance";
   } else {
     window.location.href = "/member/accountBalance?ccy="+ccyCode;
@@ -81,7 +81,7 @@ function refreshAccount() {
 function refreshAccountTxn() {
   var currencies = document.getElementById("accountTxnCurrency");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/accountTxn";
   } else {
     window.location.href = "/member/accountTxn?ccy="+ccyCode;
@@ -91,7 +91,7 @@ function refreshAccountTxn() {
 function refreshBank() {
   var currencies = document.getElementById("bankCurrency");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/bankInfo";
   } else {
     window.location.href = "/member/bankInfo?ccy="+ccyCode;
@@ -101,7 +101,7 @@ function refreshBank() {
 function refreshBankTxn() {
   var currencies = document.getElementById("bankTxnCurrency");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/bankTxn";
   } else {
     window.location.href = "/member/bankTxn?ccy="+ccyCode;
@@ -111,7 +111,7 @@ function refreshBankTxn() {
 function refreshTradingTxn() {
   var currencies = document.getElementById("tradingTxnCurrency");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/tradingTxn";
   } else {
     window.location.href = "/member/tradingTxn?ccy="+ccyCode;
@@ -121,7 +121,7 @@ function refreshTradingTxn() {
 function refreshOutstandingTxn() {
   var currencies = document.getElementById("osTxnCurrency");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/outstandingTxn";
   } else {
     window.location.href = "/member/outstandingTxn?ccy="+ccyCode;
@@ -131,7 +131,7 @@ function refreshOutstandingTxn() {
 function refreshPortfolio() {
   var currencies = document.getElementById("portfolioCurrency");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/portfolio";
   } else {
     window.location.href = "/member/portfolio?ccy="+ccyCode;
@@ -141,7 +141,7 @@ function refreshPortfolio() {
 function refreshTransfer() {
   var currencies = document.getElementById("accountCcy");
   var ccyCode = currencies.options[currencies.selectedIndex].value;
-  if(ccyCode == "#") {
+  if (ccyCode == "#") {
     window.location.href = "/member/transferFunds";
   } else {
     window.location.href = "/member/transferFunds?ccy="+ccyCode;
@@ -152,7 +152,7 @@ function refreshTransfer() {
 function checkNewOption() {
     var portfolios = document.getElementById("portfolio");
     var newOption = portfolios.options[portfolios.selectedIndex].value;
-    if(newOption == "New") {
+    if (newOption == "New") {
         document.getElementById("portName").disabled = false;
         document.getElementById("portCcy").disabled = false;
     } else {
