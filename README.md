@@ -18,3 +18,29 @@ JSON web token (JWT) for API authentication &amp; authorization.<br>
 
 Domain model:<br>
 <img src="docs/domain_model.png">
+
+
+### Non-Java 8 Runtime
+
+If you do NOT have Java 8 runtime on your machine, you may encounter the below error in the logs when running the project:<br>
+PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+The reason why this happens because the data is fetched from the <a href="stocks.json">stocks.json</a> file on the yktsang.com website specified under the key &quot;yahoo.stock.json&quot; in the <a href="src/main/resources/application.properties">application.properties</a> file.
+
+There are several approaches to rectify this:
+1. Import the yktsang.com SSL cert to your Java runtime
+2. Amend the application.properties "yahoo.stock.json" key to point to a trusted website (requires recompilation)
+3. Refactor the application to fetch the data locally or within the application (under classpath inside the JAR/WAR)
+
+
+Ensure you have admin rights before importing or deleting the SSL cert. These commands will prompt you to enter the keystore password accordingly.
+
+To import the SSL cert to your Java runtime<br>
+keytool -importcert -alias yktsang.com -keystore /path/to/cacerts -file /path/to/sslcert
+
+To view the imported entry<br>
+keytool -list -v -keystore /path/to/cacerts | grep yktsang.com
+
+To delete the imported entry<br>
+keytool -delete -alias yktsang.com -keystore /path/to/cacerts
+
